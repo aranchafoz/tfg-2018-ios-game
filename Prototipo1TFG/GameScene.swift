@@ -24,6 +24,11 @@ class GameScene: SKScene {
     
     let playableArea: CGRect
     
+    let catSound = SKAction.playSoundFileNamed("hitCat", waitForCompletion: false)
+    let bearSound = SKAction.playSoundFileNamed("hitBear", waitForCompletion: false)
+    
+    var isInvincibleFriend: Bool
+    
     override init(size: CGSize) {
         let maxAspectRatio: CGFloat = 16.0/9.0
         let playableHeight = size.width / maxAspectRatio
@@ -40,6 +45,8 @@ class GameScene: SKScene {
         print(gatoTextures)
         
         gatoAnimation = SKAction.repeatForever(SKAction.animate(with: gatoTextures, timePerFrame: 0.15))
+        
+        isInvincibleFriend = false
         
         super.init(size: size)
     }
@@ -60,6 +67,7 @@ class GameScene: SKScene {
         let spriteSide = playableArea.height * 0.5
         let spriteSize = CGSize(width: spriteSide*(4/3), height: spriteSide)
         
+        gato.name = "friend"
         gato.zPosition = 3
         gato.position = CGPoint(x: 1.5*(size.width/6), y: size.height/4)
         gato.scale(to: spriteSize)
@@ -68,6 +76,7 @@ class GameScene: SKScene {
         
         addChild(gato)
         
+        panda.name = "enemy"
         panda.zPosition = 5
         panda.position = CGPoint(x: 4.5*(size.width/6), y: size.height/4)
         panda.scale(to: spriteSize)
@@ -161,5 +170,73 @@ class GameScene: SKScene {
         if(gato.action(forKey: "walk") != nil) {
             gato.removeAction(forKey: "walk") // Parar de caminar
         }
+    }
+    
+    func cuteFriendHitsEnemy(enemy: SKSpriteNode) {
+        print("El gato ha colisionado con el enemigo")
+        // TODO: restar vida al enemigo
+        panda.removeFromParent()
+        run(bearSound, withKey: "hitEnemy")
+        
+        isInvincibleFriend = true
+        
+        let blinkTimes = 4.0
+        let blinkDurantion = 1.0
+        let blinkAction = SKAction.customAction(withDuration: blinkDurantion) { (node, elapsedTime) in
+            let slice = blinkDurantion / blinkTimes
+            let remainder = Double(elapsedTime).truncatingRemainder(dividingBy: slice)
+            node.isHidden = remainder > slice / 2
+            
+        }
+        
+        let setHidden = SKAction.run {
+            self.gato.isHidden = false
+            self.isInvincibleFriend = false
+        }
+        
+        gato.run(SKAction.sequence([blinkAction, setHidden]))
+    }
+    
+    func enemyHitsCuteFriend(friend: SKSpriteNode) {
+        print("El enemigo ha colisionado con el gato")
+        // TODO: restar vida a tu personaje
+        //animateCuteFriend()
+        run(catSound, withKey: "hitFriend")
+    }
+    
+    func checkCollisions() {
+        
+        // Comprobar colisión con ataque a enemigo
+        var hitsEnemies: [SKSpriteNode] = []
+        enumerateChildNodes(withName: "enemy") { (node, _ in) in
+            let enemy = node as! SKSpriteNode
+            if enemy.frame.intersects(self.gato.frame) {
+                hitsEnemies.append(enemy)
+            }
+        }
+        
+        for enemy in hitsEnemies {
+            cuteFriendHitsEnemy(enemy: enemy)
+        }
+        
+        // Comprobar colisión con ataque del enemigo
+        if(!isInvincibleFriend) {
+            
+    //        var hitsFriends: [SKSpriteNode] = []
+    //        enumerateChildNodes(withName: "friend") { (node, _ in) in
+    //            let friend = node as! SKSpriteNode
+    //            if friend.frame.intersects(self.panda.frame) {
+    //                hitsFriends.append(friend)
+    //            }
+    //        }
+    //
+    //        for friend in hitsFriends {
+    //            enemyHitsCuteFriend(friend: friend)
+    //        }
+            }
+    }
+    
+    override func didEvaluateActions() {
+        checkCollisions()
     }
 }

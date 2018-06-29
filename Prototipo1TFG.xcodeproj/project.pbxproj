@@ -8,6 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		8FE3F2C220E2AFBD00D02C09 /* MathUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F2C120E2AFBD00D02C09 /* MathUtils.swift */; };
+		8FE3F2D020E653EB00D02C09 /* tension tambores.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8FE3F2C520E653EB00D02C09 /* tension tambores.mp3 */; };
+		8FE3F2D120E653EB00D02C09 /* tension electrica relax.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8FE3F2C620E653EB00D02C09 /* tension electrica relax.mp3 */; };
+		8FE3F2D220E653EB00D02C09 /* gato_6.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8FE3F2C820E653EB00D02C09 /* gato_6.mp3 */; };
+		8FE3F2D320E653EB00D02C09 /* angry-cat.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8FE3F2C920E653EB00D02C09 /* angry-cat.mp3 */; };
+		8FE3F2D420E653EB00D02C09 /* hitCat.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8FE3F2CA20E653EB00D02C09 /* hitCat.mp3 */; };
+		8FE3F2D520E653EB00D02C09 /* gato-cachorro-gatito-miau-.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8FE3F2CB20E653EB00D02C09 /* gato-cachorro-gatito-miau-.mp3 */; };
+		8FE3F2D620E653EB00D02C09 /* cat-fight.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8FE3F2CC20E653EB00D02C09 /* cat-fight.mp3 */; };
+		8FE3F2D720E653EB00D02C09 /* bear_large_grunt.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8FE3F2CE20E653EB00D02C09 /* bear_large_grunt.mp3 */; };
+		8FE3F2D820E653EB00D02C09 /* hitBear.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8FE3F2CF20E653EB00D02C09 /* hitBear.mp3 */; };
 		8FECED3420874CAA0094C789 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FECED3320874CAA0094C789 /* AppDelegate.swift */; };
 		8FECED3820874CAA0094C789 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8FECED3720874CAA0094C789 /* Actions.sks */; };
 		8FECED3A20874CAA0094C789 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FECED3920874CAA0094C789 /* GameScene.swift */; };
@@ -21,6 +30,15 @@
 
 /* Begin PBXFileReference section */
 		8FE3F2C120E2AFBD00D02C09 /* MathUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathUtils.swift; sourceTree = "<group>"; };
+		8FE3F2C520E653EB00D02C09 /* tension tambores.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "tension tambores.mp3"; sourceTree = "<group>"; };
+		8FE3F2C620E653EB00D02C09 /* tension electrica relax.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "tension electrica relax.mp3"; sourceTree = "<group>"; };
+		8FE3F2C820E653EB00D02C09 /* gato_6.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gato_6.mp3; sourceTree = "<group>"; };
+		8FE3F2C920E653EB00D02C09 /* angry-cat.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "angry-cat.mp3"; sourceTree = "<group>"; };
+		8FE3F2CA20E653EB00D02C09 /* hitCat.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hitCat.mp3; sourceTree = "<group>"; };
+		8FE3F2CB20E653EB00D02C09 /* gato-cachorro-gatito-miau-.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "gato-cachorro-gatito-miau-.mp3"; sourceTree = "<group>"; };
+		8FE3F2CC20E653EB00D02C09 /* cat-fight.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "cat-fight.mp3"; sourceTree = "<group>"; };
+		8FE3F2CE20E653EB00D02C09 /* bear_large_grunt.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bear_large_grunt.mp3; sourceTree = "<group>"; };
+		8FE3F2CF20E653EB00D02C09 /* hitBear.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hitBear.mp3; sourceTree = "<group>"; };
 		8FECED3020874CA90094C789 /* Prototipo1TFG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Prototipo1TFG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FECED3320874CAA0094C789 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8FECED3720874CAA0094C789 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
@@ -45,6 +63,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8FE3F2C320E653EB00D02C09 /* sounds */ = {
+			isa = PBXGroup;
+			children = (
+				8FE3F2C420E653EB00D02C09 /* fight sounds */,
+				8FE3F2C720E653EB00D02C09 /* gato */,
+				8FE3F2CD20E653EB00D02C09 /* bear */,
+			);
+			path = sounds;
+			sourceTree = "<group>";
+		};
+		8FE3F2C420E653EB00D02C09 /* fight sounds */ = {
+			isa = PBXGroup;
+			children = (
+				8FE3F2C520E653EB00D02C09 /* tension tambores.mp3 */,
+				8FE3F2C620E653EB00D02C09 /* tension electrica relax.mp3 */,
+			);
+			path = "fight sounds";
+			sourceTree = "<group>";
+		};
+		8FE3F2C720E653EB00D02C09 /* gato */ = {
+			isa = PBXGroup;
+			children = (
+				8FE3F2C820E653EB00D02C09 /* gato_6.mp3 */,
+				8FE3F2C920E653EB00D02C09 /* angry-cat.mp3 */,
+				8FE3F2CA20E653EB00D02C09 /* hitCat.mp3 */,
+				8FE3F2CB20E653EB00D02C09 /* gato-cachorro-gatito-miau-.mp3 */,
+				8FE3F2CC20E653EB00D02C09 /* cat-fight.mp3 */,
+			);
+			path = gato;
+			sourceTree = "<group>";
+		};
+		8FE3F2CD20E653EB00D02C09 /* bear */ = {
+			isa = PBXGroup;
+			children = (
+				8FE3F2CE20E653EB00D02C09 /* bear_large_grunt.mp3 */,
+				8FE3F2CF20E653EB00D02C09 /* hitBear.mp3 */,
+			);
+			path = bear;
+			sourceTree = "<group>";
+		};
 		8FECED2720874CA90094C789 = {
 			isa = PBXGroup;
 			children = (
@@ -65,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				8FECED542087550F0094C789 /* sprites.atlas */,
+				8FE3F2C320E653EB00D02C09 /* sounds */,
 				8FECED502087549A0094C789 /* images */,
 				8FECED3320874CAA0094C789 /* AppDelegate.swift */,
 				8FECED3720874CAA0094C789 /* Actions.sks */,
@@ -145,12 +204,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FE3F2D220E653EB00D02C09 /* gato_6.mp3 in Resources */,
 				8FECED552087550F0094C789 /* sprites.atlas in Resources */,
+				8FE3F2D120E653EB00D02C09 /* tension electrica relax.mp3 in Resources */,
 				8FECED532087549A0094C789 /* back1.png in Resources */,
+				8FE3F2D420E653EB00D02C09 /* hitCat.mp3 in Resources */,
 				8FECED3F20874CAA0094C789 /* Main.storyboard in Resources */,
 				8FECED4120874CAB0094C789 /* Assets.xcassets in Resources */,
+				8FE3F2D820E653EB00D02C09 /* hitBear.mp3 in Resources */,
+				8FE3F2D620E653EB00D02C09 /* cat-fight.mp3 in Resources */,
 				8FECED4420874CAB0094C789 /* LaunchScreen.storyboard in Resources */,
+				8FE3F2D720E653EB00D02C09 /* bear_large_grunt.mp3 in Resources */,
+				8FE3F2D520E653EB00D02C09 /* gato-cachorro-gatito-miau-.mp3 in Resources */,
+				8FE3F2D020E653EB00D02C09 /* tension tambores.mp3 in Resources */,
 				8FECED3820874CAA0094C789 /* Actions.sks in Resources */,
+				8FE3F2D320E653EB00D02C09 /* angry-cat.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
