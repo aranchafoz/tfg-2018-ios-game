@@ -10,8 +10,10 @@ import SpriteKit
 
 class GameScene: SKScene {
     
-    let gato = SKSpriteNode(imageNamed: "gato1")
+    let gato = SKSpriteNode(imageNamed: "gato2")
     let panda = SKSpriteNode(imageNamed: "panda1")
+    
+    let gatoAnimation: SKAction
     
     var lastUpdatedTime : TimeInterval = 0 // Última vez que hemos actualizado la pantalla en el método update
     var dt : TimeInterval = 0 // Delta time desde la última actualización
@@ -28,6 +30,16 @@ class GameScene: SKScene {
         let playableMargin = (size.height - playableHeight)/2
         playableArea = CGRect(x: 0, y: playableMargin, width: size.width, height: playableHeight)
         
+        var gatoTextures: [SKTexture] = []
+        for i in 1...3 {
+            gatoTextures.append(SKTexture(imageNamed: "gato\(i)"))
+        }
+        gatoTextures.append(gatoTextures[1])
+        
+        
+        print(gatoTextures)
+        
+        gatoAnimation = SKAction.repeatForever(SKAction.animate(with: gatoTextures, timePerFrame: 0.15))
         
         super.init(size: size)
     }
@@ -49,12 +61,15 @@ class GameScene: SKScene {
         let spriteSize = CGSize(width: spriteSide*(4/3), height: spriteSide)
         
         gato.zPosition = 3
-        gato.position = CGPoint(x: 1.5*(size.width/6), y: size.height/5)
+        gato.position = CGPoint(x: 1.5*(size.width/6), y: size.height/4)
         gato.scale(to: spriteSize)
+        
+        //gato.run(SKAction.repeatForever(gatoAnimation))
+        
         addChild(gato)
         
         panda.zPosition = 5
-        panda.position = CGPoint(x: 4.5*(size.width/6), y: size.height/5)
+        panda.position = CGPoint(x: 4.5*(size.width/6), y: size.height/4)
         panda.scale(to: spriteSize)
         addChild(panda)
     }
@@ -73,6 +88,7 @@ class GameScene: SKScene {
         
         if(gato.position - lastTouchLocation).length() < cuteFriendVelocity.length() * CGFloat(dt) {
             cuteFriendVelocity = CGPoint.zero
+            stopCuteFriend()
         } else {
             moveSprite(sprite: gato, velocity: cuteFriendVelocity)
         }
@@ -84,6 +100,9 @@ class GameScene: SKScene {
     }
     
     func moveCuteFriendToLocation(location: CGPoint) {
+        
+        animateCuteFriend()
+        
         let offset = location - gato.position
         
         let direction = offset.normalize() // Un vector unitario del movimiento
@@ -129,6 +148,18 @@ class GameScene: SKScene {
         if gato.position.y >= upperRigth.y {
             gato.position.y = upperRigth.y
             cuteFriendVelocity.y = -cuteFriendVelocity.y
+        }
+    }
+    
+    func animateCuteFriend() {
+        if(gato.action(forKey: "walk") == nil) {
+            gato.run(gatoAnimation, withKey: "walk") // Animación para caminar
+        }
+    }
+    
+    func stopCuteFriend() {
+        if(gato.action(forKey: "walk") != nil) {
+            gato.removeAction(forKey: "walk") // Parar de caminar
         }
     }
 }
