@@ -89,6 +89,8 @@ class GameScene: SKScene {
         panda.position = CGPoint(x: 4.5*(size.width/6), y: size.height/4)
         panda.scale(to: spriteSize)
         addChild(panda)
+        
+        playBackgroundMusic(filename: "tension_electrica_relax.mp3")
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -114,6 +116,7 @@ class GameScene: SKScene {
             isGameOver = true
             print("Tu personaje se ha quedado sin vida. You lose")
             
+            backgroundAudioPlayer.stop()
             let gameOverScene = GameOverScene(size: size, hasWon: false)
             gameOverScene.scaleMode = scaleMode
             
@@ -127,6 +130,7 @@ class GameScene: SKScene {
             isGameOver = true
             print("You win")
             
+            backgroundAudioPlayer.stop()
             let gameOverScene = GameOverScene(size: size, hasWon: true)
             gameOverScene.scaleMode = scaleMode
             
