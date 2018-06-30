@@ -29,6 +29,11 @@ class GameScene: SKScene {
     
     var isInvincibleFriend: Bool
     
+    var cuteFriendLife: Int = 1
+    
+    var isGameOver: Bool
+    var updates: Int
+    
     override init(size: CGSize) {
         let maxAspectRatio: CGFloat = 16.0/9.0
         let playableHeight = size.width / maxAspectRatio
@@ -47,6 +52,9 @@ class GameScene: SKScene {
         gatoAnimation = SKAction.repeatForever(SKAction.animate(with: gatoTextures, timePerFrame: 0.15))
         
         isInvincibleFriend = false
+        
+        isGameOver = false
+        updates = 0
         
         super.init(size: size)
     }
@@ -100,6 +108,33 @@ class GameScene: SKScene {
             stopCuteFriend()
         } else {
             moveSprite(sprite: gato, velocity: cuteFriendVelocity)
+        }
+        
+        if cuteFriendLife <= 0 && !isGameOver {
+            isGameOver = true
+            print("Tu personaje se ha quedado sin vida. You lose")
+            
+            let gameOverScene = GameOverScene(size: size, hasWon: false)
+            gameOverScene.scaleMode = scaleMode
+            
+            let transition = SKTransition.flipVertical(withDuration: 1.0)
+            
+            view?.presentScene(gameOverScene, transition: transition)
+        }
+        
+        
+        if updates >= 500 && !isGameOver {
+            isGameOver = true
+            print("You win")
+            
+            let gameOverScene = GameOverScene(size: size, hasWon: true)
+            gameOverScene.scaleMode = scaleMode
+            
+            let transition = SKTransition.flipVertical(withDuration: 1.0)
+            
+            view?.presentScene(gameOverScene, transition: transition)
+        } else {
+            updates += 1
         }
     }
     
@@ -175,6 +210,9 @@ class GameScene: SKScene {
     func cuteFriendHitsEnemy(enemy: SKSpriteNode) {
         print("El gato ha colisionado con el enemigo")
         // TODO: restar vida al enemigo
+        
+        cuteFriendLife -= 1
+        
         panda.removeFromParent()
         run(bearSound, withKey: "hitEnemy")
         
@@ -184,7 +222,7 @@ class GameScene: SKScene {
         let blinkDurantion = 1.0
         let blinkAction = SKAction.customAction(withDuration: blinkDurantion) { (node, elapsedTime) in
             let slice = blinkDurantion / blinkTimes
-            let remainder = Double(elapsedTime).truncatingRemainder(dividingBy: slice)
+            let remainder = Double(elapsedTime).truncatingRemainder(dividingBy: slice) // truncatingReminder == operator %
             node.isHidden = remainder > slice / 2
             
         }
