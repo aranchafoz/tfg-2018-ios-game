@@ -72,8 +72,8 @@ class GameScene: SKScene {
         addChild(background)
         
         
-        let spriteSide = playableArea.height * 0.5
-        let spriteSize = CGSize(width: spriteSide*(4/3), height: spriteSide)
+        let spriteSide = playableArea.height * 0.3
+        let spriteSize = CGSize(width: spriteSide*0.83, height: spriteSide)
         
         gato.name = "friend"
         gato.zPosition = 3
