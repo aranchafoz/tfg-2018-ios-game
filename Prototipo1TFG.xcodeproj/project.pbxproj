@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		8F9AB2DC20EF7E99000E44DB /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AB2DB20EF7E99000E44DB /* Character.swift */; };
 		8F9AB2DE20EF7EF0000E44DB /* CpuComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AB2DD20EF7EF0000E44DB /* CpuComponent.swift */; };
-		8F9AB2E220F0D4FA000E44DB /* MyScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8F9AB2E120F0D4FA000E44DB /* MyScene.sks */; };
 		8FE3F2C220E2AFBD00D02C09 /* MathUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F2C120E2AFBD00D02C09 /* MathUtils.swift */; };
 		8FE3F2D020E653EB00D02C09 /* tension_tambores.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8FE3F2C520E653EB00D02C09 /* tension_tambores.mp3 */; };
 		8FE3F2D120E653EB00D02C09 /* tension_electrica_relax.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8FE3F2C620E653EB00D02C09 /* tension_electrica_relax.mp3 */; };
@@ -40,7 +39,6 @@
 /* Begin PBXFileReference section */
 		8F9AB2DB20EF7E99000E44DB /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		8F9AB2DD20EF7EF0000E44DB /* CpuComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CpuComponent.swift; sourceTree = "<group>"; };
-		8F9AB2E120F0D4FA000E44DB /* MyScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyScene.sks; sourceTree = "<group>"; };
 		8FE3F2C120E2AFBD00D02C09 /* MathUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathUtils.swift; sourceTree = "<group>"; };
 		8FE3F2C520E653EB00D02C09 /* tension_tambores.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tension_tambores.mp3; sourceTree = "<group>"; };
 		8FE3F2C620E653EB00D02C09 /* tension_electrica_relax.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tension_electrica_relax.mp3; sourceTree = "<group>"; };
@@ -174,7 +172,6 @@
 				8FECED4220874CAB0094C789 /* LaunchScreen.storyboard */,
 				8FECED4520874CAB0094C789 /* Info.plist */,
 				8FE3F2E620E80B4900D02C09 /* MusicUtils.swift */,
-				8F9AB2E120F0D4FA000E44DB /* MyScene.sks */,
 			);
 			path = Prototipo1TFG;
 			sourceTree = "<group>";
@@ -249,7 +246,6 @@
 			files = (
 				8FE3F2E520E7F81A00D02C09 /* youWin.png in Resources */,
 				8FE3F2DC20E6768A00D02C09 /* youLose.png in Resources */,
-				8F9AB2E220F0D4FA000E44DB /* MyScene.sks in Resources */,
 				8FE3F2D220E653EB00D02C09 /* gato_6.mp3 in Resources */,
 				8FECED552087550F0094C789 /* sprites.atlas in Resources */,
 				8FE3F2E120E7F54400D02C09 /* lose.mp3 in Resources */,

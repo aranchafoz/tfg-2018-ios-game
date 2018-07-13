@@ -10,16 +10,12 @@ import SpriteKit
 
 class GameScene: SKScene {
     
-    let gato = SKSpriteNode(imageNamed: "gato2")
-    let panda = SKSpriteNode(imageNamed: "panda1")
-    
-    let gatoAnimation: SKAction
+    let gato: Character
+    let panda: Character
     
     var lastUpdatedTime : TimeInterval = 0 // Última vez que hemos actualizado la pantalla en el método update
     var dt : TimeInterval = 0 // Delta time desde la última actualización
     
-    let spritePixelsPerSecond : CGFloat = 300
-    var cuteFriendVelocity = CGPoint.zero
     var lastTouchLocation = CGPoint.zero
     
     let playableArea: CGRect
@@ -29,28 +25,21 @@ class GameScene: SKScene {
     
     var isInvincibleFriend: Bool
     
-    var cuteFriendLife: Int = 1
-    
     var isGameOver: Bool
     var updates: Int
     
     override init(size: CGSize) {
+        // Define playable area
         let maxAspectRatio: CGFloat = 16.0/9.0
         let playableHeight = size.width / maxAspectRatio
         let playableMargin = (size.height - playableHeight)/2
         playableArea = CGRect(x: 0, y: playableMargin, width: size.width, height: playableHeight)
         
-        var gatoTextures: [SKTexture] = []
-        for i in 1...3 {
-            gatoTextures.append(SKTexture(imageNamed: "gato\(i)"))
-        }
-        gatoTextures.append(gatoTextures[1])
+        // Init sprites
+        gato = Character(name: "gato", lifePoints: 200, spritePixelsPerSecond: 300)
+        panda = Character(name: "panda", lifePoints: 200, spritePixelsPerSecond: 250)
         
-        
-        print(gatoTextures)
-        
-        gatoAnimation = SKAction.repeatForever(SKAction.animate(with: gatoTextures, timePerFrame: 0.15))
-        
+
         isInvincibleFriend = false
         
         isGameOver = false
@@ -64,7 +53,7 @@ class GameScene: SKScene {
     }
     
     override func didMove(to view: SKView) {
-        
+        // Background
         let background = SKSpriteNode(imageNamed: "back1")
         background.zPosition = -1
         background.position = CGPoint(x: size.width/2, y: size.height/2)
@@ -72,25 +61,26 @@ class GameScene: SKScene {
         addChild(background)
         
         
-        let spriteSide = playableArea.height * 0.3
-        let spriteSize = CGSize(width: spriteSide*0.83, height: spriteSide)
+        let spriteHeight = playableArea.height * 0.3
+        let spriteSize = CGSize(width: spriteHeight*0.83, height: spriteHeight)
         
-        gato.name = "friend"
-        gato.zPosition = 3
-        gato.position = CGPoint(x: 1.5*(size.width/6), y: size.height/4)
-        gato.scale(to: spriteSize)
+        gato.sprite.name = "friend"
+        gato.sprite.zPosition = 3
+        gato.sprite.position = CGPoint(x: 1.5*(size.width/6), y: size.height/4)
+        gato.sprite.scale(to: spriteSize)
+        addChild(gato.sprite)
         
-        //gato.run(SKAction.repeatForever(gatoAnimation))
-        
-        addChild(gato)
-        
-        panda.name = "enemy"
-        panda.zPosition = 5
-        panda.position = CGPoint(x: 4.5*(size.width/6), y: size.height/4)
-        panda.scale(to: spriteSize)
-        addChild(panda)
+        panda.sprite.name = "enemy1"
+        panda.sprite.zPosition = 5
+        panda.sprite.position = CGPoint(x: 4.5*(size.width/6), y: size.height/4)
+        panda.sprite.scale(to: spriteSize)
+        addChild(panda.sprite)
         
         playBackgroundMusic(filename: "tension_electrica_relax.mp3")
+        
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
+        doubleTap.numberOfTapsRequired = 2
+        view.addGestureRecognizer(doubleTap)
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -105,61 +95,46 @@ class GameScene: SKScene {
         
         checkBounds()
         
-        if(gato.position - lastTouchLocation).length() < cuteFriendVelocity.length() * CGFloat(dt) {
-            cuteFriendVelocity = CGPoint.zero
-            stopCuteFriend()
+        if(gato.sprite.position - lastTouchLocation).length() < gato.velocity.length() * CGFloat(dt) {
+            gato.velocity = CGPoint.zero
+            gato.stopAnimation(action: "walk")
         } else {
-            moveSprite(sprite: gato, velocity: cuteFriendVelocity)
+            gato.movePositionAt(deltaTime: dt)
         }
         
-        if cuteFriendLife <= 0 && !isGameOver {
+        if gato.isDefeated() && !isGameOver {
             isGameOver = true
             print("Tu personaje se ha quedado sin vida. You lose")
             
             backgroundAudioPlayer.stop()
+            
+            // Scene change
             let gameOverScene = GameOverScene(size: size, hasWon: false)
             gameOverScene.scaleMode = scaleMode
-            
             let transition = SKTransition.flipVertical(withDuration: 1.0)
-            
             view?.presentScene(gameOverScene, transition: transition)
         }
         
         
-        if updates >= 500 && !isGameOver {
+        if panda.isDefeated() && !isGameOver {
             isGameOver = true
             print("You win")
             
             backgroundAudioPlayer.stop()
+            
+            // Scene change
             let gameOverScene = GameOverScene(size: size, hasWon: true)
             gameOverScene.scaleMode = scaleMode
-            
             let transition = SKTransition.flipVertical(withDuration: 1.0)
-            
             view?.presentScene(gameOverScene, transition: transition)
         } else {
             updates += 1
         }
     }
     
-    func moveSprite(sprite: SKSpriteNode, velocity: CGPoint) {
-        let amount = velocity * CGFloat(dt)
-        sprite.position += amount
-    }
-    
-    func moveCuteFriendToLocation(location: CGPoint) {
-        
-        animateCuteFriend()
-        
-        let offset = location - gato.position
-        
-        let direction = offset.normalize() // Un vector unitario del movimiento
-        cuteFriendVelocity = direction * spritePixelsPerSecond
-    }
-    
     func sceneTouched(touchedLocation: CGPoint) {
         lastTouchLocation = touchedLocation
-        moveCuteFriendToLocation(location: touchedLocation)
+        gato.moveTo(location: touchedLocation)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -174,111 +149,91 @@ class GameScene: SKScene {
         sceneTouched(touchedLocation: location)
     }
     
+    @objc func doubleTapped() {
+        print("Double Tap")
+        gato.attackWith(attackType: AttackType.NORMAL)
+        
+        checkCollisions() // FIXME: Refactor to a especific function
+    }
+    
     func checkBounds() {
         let bottomLetf = CGPoint(x: 0, y: playableArea.minY)
         let upperRigth = CGPoint(x: playableArea.width, y: playableArea.maxY)
         
-        if gato.position.x <= bottomLetf.x {
-            gato.position.x = bottomLetf.x
-            cuteFriendVelocity.x = -cuteFriendVelocity.x
+        if gato.sprite.position.x <= bottomLetf.x {
+            gato.sprite.position.x = bottomLetf.x
+            gato.velocity.x = -gato.velocity.x
         }
         
-        if gato.position.y <= bottomLetf.y {
-            gato.position.y = bottomLetf.y
-            cuteFriendVelocity.y = -cuteFriendVelocity.y
+        if gato.sprite.position.y <= bottomLetf.y {
+            gato.sprite.position.y = bottomLetf.y
+            gato.velocity.y = -gato.velocity.y
         }
         
-        if gato.position.x >= upperRigth.x {
-            gato.position.x = upperRigth.x
-            cuteFriendVelocity.x = -cuteFriendVelocity.x
+        if gato.sprite.position.x >= upperRigth.x {
+            gato.sprite.position.x = upperRigth.x
+            gato.velocity.x = -gato.velocity.x
         }
         
-        if gato.position.y >= upperRigth.y {
-            gato.position.y = upperRigth.y
-            cuteFriendVelocity.y = -cuteFriendVelocity.y
-        }
-    }
-    
-    func animateCuteFriend() {
-        if(gato.action(forKey: "walk") == nil) {
-            gato.run(gatoAnimation, withKey: "walk") // Animación para caminar
+        if gato.sprite.position.y >= upperRigth.y {
+            gato.sprite.position.y = upperRigth.y
+            gato.velocity.y = -gato.velocity.y
         }
     }
     
-    func stopCuteFriend() {
-        if(gato.action(forKey: "walk") != nil) {
-            gato.removeAction(forKey: "walk") // Parar de caminar
-        }
-    }
-    
-    func cuteFriendHitsEnemy(enemy: SKSpriteNode) {
-        print("El gato ha colisionado con el enemigo")
-        // TODO: restar vida al enemigo
+    func charactersHit(friend: Character, enemy: Character) {
+        print("El gato y el enemigo han colisionado")
         
-        cuteFriendLife -= 1
-        
-        panda.removeFromParent()
-        run(bearSound, withKey: "hitEnemy")
-        
-        isInvincibleFriend = true
-        
-        let blinkTimes = 4.0
-        let blinkDurantion = 1.0
-        let blinkAction = SKAction.customAction(withDuration: blinkDurantion) { (node, elapsedTime) in
-            let slice = blinkDurantion / blinkTimes
-            let remainder = Double(elapsedTime).truncatingRemainder(dividingBy: slice) // truncatingReminder == operator %
-            node.isHidden = remainder > slice / 2
+        if gato.isAttacking {
+            panda.isAttackedBy(characther: gato)
+            run(catSound, withKey: "hitFriend")
+            panda.makeInvincible()
             
+            if panda.isDefeated() {
+                panda.sprite.removeFromParent()
+            }
         }
         
-        let setHidden = SKAction.run {
-            self.gato.isHidden = false
-            self.isInvincibleFriend = false
+        if panda.isAttacking {
+//            panda.attackTo(enemy: gato, attackType: AttackType.NORMAL)
+//            run(bearSound, withKey: "hitEnemy")
+//            gato.makeInvincible()
+//
+//            if gato.isDefeated() {
+//                gato.sprite.removeFromParent()
+//            }
         }
         
-        gato.run(SKAction.sequence([blinkAction, setHidden]))
-    }
-    
-    func enemyHitsCuteFriend(friend: SKSpriteNode) {
-        print("El enemigo ha colisionado con el gato")
-        // TODO: restar vida a tu personaje
-        //animateCuteFriend()
-        run(catSound, withKey: "hitFriend")
+        print("Gato: \(gato.life)")
+        print("Panda: \(panda.life)")
     }
     
     func checkCollisions() {
         
-        // Comprobar colisión con ataque a enemigo
-        var hitsEnemies: [SKSpriteNode] = []
-        enumerateChildNodes(withName: "enemy") { (node, _ in) in
+        // Comprobar colisión con enemigo
+        enumerateChildNodes(withName: "enemy*") { (node, _ in) in
             let enemy = node as! SKSpriteNode
-            if enemy.frame.intersects(self.gato.frame) {
-                hitsEnemies.append(enemy)
-            }
-        }
-        
-        for enemy in hitsEnemies {
-            cuteFriendHitsEnemy(enemy: enemy)
-        }
-        
-        // Comprobar colisión con ataque del enemigo
-        if(!isInvincibleFriend) {
             
-    //        var hitsFriends: [SKSpriteNode] = []
-    //        enumerateChildNodes(withName: "friend") { (node, _ in) in
-    //            let friend = node as! SKSpriteNode
-    //            if friend.frame.intersects(self.panda.frame) {
-    //                hitsFriends.append(friend)
-    //            }
-    //        }
-    //
-    //        for friend in hitsFriends {
-    //            enemyHitsCuteFriend(friend: friend)
-    //        }
+            if !self.gato.isInvincible {
+            
+                // TODO: Si el gato ataca con dirección izquierda
+                // Si el gato ataca con dirección derecha
+                let gatoFrame = self.gato.sprite.frame
+                let gatoAttackRect = CGRect(x: gatoFrame.midX, y: gatoFrame.minY, width: gatoFrame.width/2, height: gatoFrame.height)
+            
+                // Si colisiona con el ataque del gato
+                if enemy.frame.intersects(gatoAttackRect) {
+                    // panda
+                    if enemy.name == "enemy1" {
+                        self.charactersHit(friend: self.gato, enemy: self.panda)
+                    }
+                }
             }
+        }
+
     }
     
     override func didEvaluateActions() {
-        checkCollisions()
+        //checkCollisions()
     }
 }
