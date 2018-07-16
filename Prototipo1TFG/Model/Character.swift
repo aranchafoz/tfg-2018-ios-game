@@ -15,6 +15,12 @@ enum AttackType {
     case ESPECIAL
 }
 
+enum Direction {
+    case RIGHT
+    case LEFT
+    case NONE
+}
+
 class Character: GKEntity {
     
     let sprite: SKSpriteNode
@@ -29,6 +35,8 @@ class Character: GKEntity {
     
     let normalAttack: CGFloat = 20.0
     let especialAttack: CGFloat = 50.0
+    
+    var direction: Direction
     
     var especialCharges: Int
     
@@ -47,6 +55,7 @@ class Character: GKEntity {
         
         self.spritePixelsPerSecond = spritePixelsPerSecond
         
+        direction = Direction.NONE
         especialCharges = 0
         
         isAttacking = false
@@ -87,8 +96,11 @@ class Character: GKEntity {
         
         if attackType == AttackType.NORMAL {
             isAttacking = true
+            
             let spriteHeight = sprite.size.height
-            let scale = SKAction.scale(to: CGSize(width: spriteHeight * 1.17, height: spriteHeight), duration: 0)
+            let spriteWidth = spriteHeight * 1.17 * CGFloat(getScaleDirection(direction: direction))
+        
+            let scale = SKAction.scale(to: CGSize(width: spriteWidth, height: spriteHeight), duration: 0)
             let attackAction = animations["normalAttack"]
             let group1 = SKAction.group([scale, attackAction!])
             
@@ -126,12 +138,14 @@ class Character: GKEntity {
     }
     
     func moveTo(location: CGPoint) {
-        animate(action: "walk")
-        
         let offset = location - sprite.position
         
         let direction = offset.normalize() // Un vector unitario del movimiento
         self.velocity = direction * spritePixelsPerSecond
+        
+        self.direction = (offset.x > 0) ? Direction.RIGHT : Direction.LEFT
+        
+        animate(action: "walk")
     }
     
     func movePositionAt(deltaTime: TimeInterval) {
@@ -141,7 +155,10 @@ class Character: GKEntity {
     
     func animate(action: String) {
         if sprite.action(forKey: action) == nil {
-            sprite.run(animations[action]!, withKey: action)
+            let scale = SKAction.scaleX(to: CGFloat(getScaleDirection(direction: direction)), duration: 0)
+            let animation = animations[action]
+            let group = SKAction.group([scale, animation!])
+            sprite.run(group, withKey: action)
         }
     }
     
@@ -171,4 +188,14 @@ class Character: GKEntity {
         sprite.run(SKAction.sequence([blinkAction, setHidden]))
     }
     
+    func getScaleDirection(direction: Direction) -> Int {
+        switch direction {
+        case .RIGHT:
+            return 1
+        case .LEFT:
+            return -1
+        default:
+            return 0
+        }
+    }
 }

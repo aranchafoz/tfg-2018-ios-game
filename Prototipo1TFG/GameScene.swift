@@ -153,7 +153,7 @@ class GameScene: SKScene {
         print("Double Tap")
         gato.attackWith(attackType: AttackType.NORMAL)
         
-        checkCollisions() // FIXME: Refactor to a especific function
+        checkCollisionsWithEnemy(attacker: self.gato, kicked: self.panda)
     }
     
     func checkBounds() {
@@ -181,51 +181,48 @@ class GameScene: SKScene {
         }
     }
     
-    func charactersHit(friend: Character, enemy: Character) {
+    func characterHit(attacker: Character, kicked: Character) {
         print("El gato y el enemigo han colisionado")
         
-        if gato.isAttacking {
-            panda.isAttackedBy(characther: gato)
-            run(catSound, withKey: "hitFriend")
-            panda.makeInvincible()
+        if attacker.isAttacking {
+            kicked.isAttackedBy(characther: attacker)
+            run(catSound, withKey: "hitFriend") //run(bearSound, withKey: "hitEnemy")
+            kicked.makeInvincible()
             
-            if panda.isDefeated() {
-                panda.sprite.removeFromParent()
+            if kicked.isDefeated() {
+                kicked.sprite.removeFromParent()
             }
         }
         
-        if panda.isAttacking {
-//            panda.attackTo(enemy: gato, attackType: AttackType.NORMAL)
-//            run(bearSound, withKey: "hitEnemy")
-//            gato.makeInvincible()
-//
-//            if gato.isDefeated() {
-//                gato.sprite.removeFromParent()
-//            }
-        }
-        
-        print("Gato: \(gato.life)")
-        print("Panda: \(panda.life)")
+        print("Attacker: \(attacker.life)")
+        print("Kicked: \(kicked.life)")
     }
     
-    func checkCollisions() {
+    func checkCollisionsWithEnemy(attacker: Character, kicked: Character) {
         
+        // FIXME: Refactor enumerateNode withName "enemy*" to kicked.type
         // Comprobar colisión con enemigo
         enumerateChildNodes(withName: "enemy*") { (node, _ in) in
             let enemy = node as! SKSpriteNode
             
-            if !self.gato.isInvincible {
+            if !kicked.isInvincible {
             
-                // TODO: Si el gato ataca con dirección izquierda
-                // Si el gato ataca con dirección derecha
-                let gatoFrame = self.gato.sprite.frame
-                let gatoAttackRect = CGRect(x: gatoFrame.midX, y: gatoFrame.minY, width: gatoFrame.width/2, height: gatoFrame.height)
+                let attackerFrame = attacker.sprite.frame
+                var startX: CGFloat = 0.0
             
+                if attacker.direction == Direction.RIGHT {
+                    startX = attackerFrame.midX
+                } else if attacker.direction == Direction.LEFT {
+                    startX = attackerFrame.minX
+                }
+                
+                let attackRect = CGRect(x: startX, y: attackerFrame.minY, width: attackerFrame.width/2, height: attackerFrame.height)
+                
                 // Si colisiona con el ataque del gato
-                if enemy.frame.intersects(gatoAttackRect) {
+                if enemy.frame.intersects(attackRect) {
                     // panda
                     if enemy.name == "enemy1" {
-                        self.charactersHit(friend: self.gato, enemy: self.panda)
+                        self.characterHit(attacker: attacker, kicked: kicked)
                     }
                 }
             }
