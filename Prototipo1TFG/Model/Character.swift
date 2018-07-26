@@ -91,7 +91,7 @@ class Character: GKEntity {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func attackWith(attackType: AttackType) {
+    func attackWith(attackType: AttackType, onCompletion: ( () -> Void )? ) {
         print("El personaje ataca con: \(attackType)")
         
         if attackType == AttackType.NORMAL {
@@ -113,7 +113,7 @@ class Character: GKEntity {
                 print("Gato is attacking = false")
                 self.isAttacking = false
             }
-            sprite.run(SKAction.sequence([group1, group2, SKAction.wait(forDuration: 2), endAttack]))
+            sprite.run(SKAction.sequence([group1, group2, SKAction.wait(forDuration: 2), endAttack]), completion: onCompletion!)
             especialCharges += 1
         } else if attackType == AttackType.ESPECIAL && especialCharges >= 3 {
             

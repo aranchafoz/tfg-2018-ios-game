@@ -7,8 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F24FC8420FE7BB3005BD9DF /* NPCAttackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24FC8320FE7BB3005BD9DF /* NPCAttackState.swift */; };
+		8F24FC8620FE7BCA005BD9DF /* NPCIdleState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24FC8520FE7BCA005BD9DF /* NPCIdleState.swift */; };
+		8F24FC882107AA32005BD9DF /* NPCDefendState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24FC872107AA32005BD9DF /* NPCDefendState.swift */; };
+		8F24FC8A2107AACB005BD9DF /* NPCMoveToState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24FC892107AACB005BD9DF /* NPCMoveToState.swift */; };
+		8F24FC8C2107AAE3005BD9DF /* NPCDefeatedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24FC8B2107AAE3005BD9DF /* NPCDefeatedState.swift */; };
+		8F24FC8E210A16F9005BD9DF /* NPCState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24FC8D210A16F9005BD9DF /* NPCState.swift */; };
 		8F9AB2DC20EF7E99000E44DB /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AB2DB20EF7E99000E44DB /* Character.swift */; };
-		8F9AB2DE20EF7EF0000E44DB /* CpuComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AB2DD20EF7EF0000E44DB /* CpuComponent.swift */; };
+		8F9AB2DE20EF7EF0000E44DB /* NPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AB2DD20EF7EF0000E44DB /* NPC.swift */; };
 		8FE3F2C220E2AFBD00D02C09 /* MathUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F2C120E2AFBD00D02C09 /* MathUtils.swift */; };
 		8FE3F2D020E653EB00D02C09 /* tension_tambores.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8FE3F2C520E653EB00D02C09 /* tension_tambores.mp3 */; };
 		8FE3F2D120E653EB00D02C09 /* tension_electrica_relax.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8FE3F2C620E653EB00D02C09 /* tension_electrica_relax.mp3 */; };
@@ -37,8 +43,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8F24FC8320FE7BB3005BD9DF /* NPCAttackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NPCAttackState.swift; sourceTree = "<group>"; };
+		8F24FC8520FE7BCA005BD9DF /* NPCIdleState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NPCIdleState.swift; sourceTree = "<group>"; };
+		8F24FC872107AA32005BD9DF /* NPCDefendState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NPCDefendState.swift; sourceTree = "<group>"; };
+		8F24FC892107AACB005BD9DF /* NPCMoveToState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NPCMoveToState.swift; sourceTree = "<group>"; };
+		8F24FC8B2107AAE3005BD9DF /* NPCDefeatedState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NPCDefeatedState.swift; sourceTree = "<group>"; };
+		8F24FC8D210A16F9005BD9DF /* NPCState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NPCState.swift; sourceTree = "<group>"; };
 		8F9AB2DB20EF7E99000E44DB /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
-		8F9AB2DD20EF7EF0000E44DB /* CpuComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CpuComponent.swift; sourceTree = "<group>"; };
+		8F9AB2DD20EF7EF0000E44DB /* NPC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NPC.swift; sourceTree = "<group>"; };
 		8FE3F2C120E2AFBD00D02C09 /* MathUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathUtils.swift; sourceTree = "<group>"; };
 		8FE3F2C520E653EB00D02C09 /* tension_tambores.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tension_tambores.mp3; sourceTree = "<group>"; };
 		8FE3F2C620E653EB00D02C09 /* tension_electrica_relax.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tension_electrica_relax.mp3; sourceTree = "<group>"; };
@@ -83,7 +95,13 @@
 			isa = PBXGroup;
 			children = (
 				8F9AB2DB20EF7E99000E44DB /* Character.swift */,
-				8F9AB2DD20EF7EF0000E44DB /* CpuComponent.swift */,
+				8F9AB2DD20EF7EF0000E44DB /* NPC.swift */,
+				8F24FC8D210A16F9005BD9DF /* NPCState.swift */,
+				8F24FC8320FE7BB3005BD9DF /* NPCAttackState.swift */,
+				8F24FC872107AA32005BD9DF /* NPCDefendState.swift */,
+				8F24FC892107AACB005BD9DF /* NPCMoveToState.swift */,
+				8F24FC8B2107AAE3005BD9DF /* NPCDefeatedState.swift */,
+				8F24FC8520FE7BCA005BD9DF /* NPCIdleState.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -273,12 +291,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F9AB2DE20EF7EF0000E44DB /* CpuComponent.swift in Sources */,
+				8F9AB2DE20EF7EF0000E44DB /* NPC.swift in Sources */,
+				8F24FC8420FE7BB3005BD9DF /* NPCAttackState.swift in Sources */,
 				8FE3F2DE20E7E74700D02C09 /* GameOverScene.swift in Sources */,
+				8F24FC8620FE7BCA005BD9DF /* NPCIdleState.swift in Sources */,
 				8FECED3A20874CAA0094C789 /* GameScene.swift in Sources */,
+				8F24FC8E210A16F9005BD9DF /* NPCState.swift in Sources */,
+				8F24FC882107AA32005BD9DF /* NPCDefendState.swift in Sources */,
 				8F9AB2DC20EF7E99000E44DB /* Character.swift in Sources */,
+				8F24FC8A2107AACB005BD9DF /* NPCMoveToState.swift in Sources */,
 				8FE3F2C220E2AFBD00D02C09 /* MathUtils.swift in Sources */,
 				8FE3F2E720E80B4900D02C09 /* MusicUtils.swift in Sources */,
+				8F24FC8C2107AAE3005BD9DF /* NPCDefeatedState.swift in Sources */,
 				8FECED3C20874CAA0094C789 /* GameViewController.swift in Sources */,
 				8FECED3420874CAA0094C789 /* AppDelegate.swift in Sources */,
 			);
