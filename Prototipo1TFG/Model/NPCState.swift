@@ -14,4 +14,19 @@ class NPCState: GKState {
     init(entity: NPC) {
         self.entity = entity
     }
+    
+    func stopAnimations(from previousState: GKState?) {
+        switch previousState {
+        case is NPCIdleState:
+            break
+        case is NPCDefendState:
+            entity.stopAnimation(action: "defend")
+        case is NPCMoveToState:
+            entity.stopAnimation(action: "walk")
+        case is NPCAttackState:
+            entity.stopAnimation(action: "normalAttack")
+        default:
+            break
+        }
+    }
 }

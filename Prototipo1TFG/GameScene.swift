@@ -11,7 +11,7 @@ import SpriteKit
 class GameScene: SKScene {
     
     let gato: Character
-    let panda: Character
+    let panda: NPC
     
     var lastUpdatedTime : TimeInterval = 0 // Última vez que hemos actualizado la pantalla en el método update
     var dt : TimeInterval = 0 // Delta time desde la última actualización
@@ -37,7 +37,7 @@ class GameScene: SKScene {
         
         // Init sprites
         gato = Character(name: "gato", lifePoints: 200, spritePixelsPerSecond: 300)
-        panda = Character(name: "panda", lifePoints: 200, spritePixelsPerSecond: 250)
+        panda = NPC(name: "panda", lifePoints: 200, spritePixelsPerSecond: 250, opponent: gato)
         
 
         isInvincibleFriend = false
@@ -101,6 +101,8 @@ class GameScene: SKScene {
         } else {
             gato.movePositionAt(deltaTime: dt)
         }
+        
+        panda.update(opponent: gato)
         
         if gato.isDefeated() && !isGameOver {
             isGameOver = true

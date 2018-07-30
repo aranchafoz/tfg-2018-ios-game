@@ -10,4 +10,14 @@ import GameplayKit
 
 class NPCDefendState: NPCState {
     
+    override func didEnter(from previousState: GKState?) {
+        
+        print("Defend State did enter")
+        
+        stopAnimations(from: previousState)
+        
+        // TODO: finish
+        entity.defend(onCompletion: entity.decideState)
+        
+    }
 }

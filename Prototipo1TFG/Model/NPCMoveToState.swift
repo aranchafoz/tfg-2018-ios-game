@@ -10,4 +10,13 @@ import GameplayKit
 
 class NPCMoveToState: NPCState {
     
+    override func didEnter(from previousState: GKState?) {
+        print("Move To State did enter")
+        
+        stopAnimations(from: previousState)
+        
+        // TODO: finish
+        entity.attackWith(attackType: AttackType.NORMAL, onCompletion: entity.decideState)
+        
+    }
 }

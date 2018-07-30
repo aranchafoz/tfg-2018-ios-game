@@ -10,16 +10,11 @@ import GameplayKit
 
 class NPCAttackState: NPCState {
     override func didEnter(from previousState: GKState?) {
-        switch previousState {
-        case is NPCIdleState:
-            break
-        case is NPCDefendState:
-            entity.stopAnimation(action: "defend")
-        case is NPCMoveToState:
-            entity.stopAnimation(action: "walk")
-        default:
-            break
-        }
+        
+        print("Attack State did enter")
+        
+        stopAnimations(from: previousState)
+        
         // TODO: finish
         entity.attackWith(attackType: AttackType.NORMAL, onCompletion: entity.decideState)
         

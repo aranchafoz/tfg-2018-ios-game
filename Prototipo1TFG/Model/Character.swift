@@ -113,7 +113,11 @@ class Character: GKEntity {
                 print("Gato is attacking = false")
                 self.isAttacking = false
             }
-            sprite.run(SKAction.sequence([group1, group2, SKAction.wait(forDuration: 2), endAttack]), completion: onCompletion!)
+            if (onCompletion as ( () -> Void )?) != nil {
+                sprite.run(SKAction.sequence([group1, group2, SKAction.wait(forDuration: 2), endAttack]), completion: onCompletion!)
+            } else {
+                sprite.run(SKAction.sequence([group1, group2, SKAction.wait(forDuration: 2), endAttack]))
+            }
             especialCharges += 1
         } else if attackType == AttackType.ESPECIAL && especialCharges >= 3 {
             
@@ -127,9 +131,18 @@ class Character: GKEntity {
         self.life -= characther.normalAttack
     }
     
-    func defend() {
+    func defend( onCompletion: ( () -> Void )? ) {
+        print("El \(name) se está defendiendo")
         isDefending = true
         // TODO: execute defend animation
+        let wait = SKAction.wait(forDuration: 5)
+        
+        if (onCompletion as ( () -> Void )?) != nil {
+            
+            sprite.run(wait, completion: onCompletion!)
+        } else {
+            sprite.run(wait)
+        }
     }
     
     func isDefeated() -> Bool {
