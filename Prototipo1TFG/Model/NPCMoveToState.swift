@@ -10,13 +10,28 @@ import GameplayKit
 
 class NPCMoveToState: NPCState {
     
+    var opponentLocation: CGPoint = CGPoint.zero
+    
+    override func update(deltaTime seconds: TimeInterval) {
+        opponentLocation = entity.opponent.sprite.position //- CGPoint(x: entity.opponent.sprite.frame.width/2, y: 0)
+        
+        entity.moveTo(location: opponentLocation)
+        
+        if(entity.sprite.position - opponentLocation).length() < entity.velocity.length() * CGFloat(seconds) {
+            entity.velocity = CGPoint.zero
+            entity.decideState()
+        } else {
+            entity.movePositionAt(deltaTime: seconds)
+        }
+    
+    }
+    
     override func didEnter(from previousState: GKState?) {
         print("Move To State did enter")
         
         stopAnimations(from: previousState)
         
-        // TODO: finish
-        entity.attackWith(attackType: AttackType.NORMAL, onCompletion: entity.decideState)
         
+        entity.moveTo(location: opponentLocation)
     }
 }

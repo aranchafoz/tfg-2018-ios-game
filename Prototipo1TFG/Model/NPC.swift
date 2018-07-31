@@ -12,15 +12,13 @@ class NPC: Character {
     
     var stateMachine: GKStateMachine
     
-    let actionPlaying: String
-    
     var opponent: Character
+    
+    var dt : TimeInterval = 0 // Delta time desde la última actualización
     
     init(name: String, lifePoints: CGFloat, spritePixelsPerSecond: CGFloat, opponent: Character) {
         
         stateMachine = GKStateMachine(states: [])
-        
-        actionPlaying = ""
         
         self.opponent = opponent
         
@@ -42,12 +40,15 @@ class NPC: Character {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func update(opponent: Character) {
+    func update(deltaTime dt: TimeInterval, opponent: Character) {
         self.opponent = opponent
+        
+        self.dt = dt
+        
+        stateMachine.update(deltaTime: dt)
     }
     
     func decideState() {
-        // TODO: Implement
         
         // Enemy isReachable
         if opponent.sprite.frame.intersects(self.sprite.frame) {

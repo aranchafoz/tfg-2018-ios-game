@@ -37,7 +37,7 @@ class GameScene: SKScene {
         
         // Init sprites
         gato = Character(name: "gato", lifePoints: 200, spritePixelsPerSecond: 300)
-        panda = NPC(name: "panda", lifePoints: 200, spritePixelsPerSecond: 250, opponent: gato)
+        panda = NPC(name: "panda", lifePoints: 200, spritePixelsPerSecond: 200, opponent: gato)
         
 
         isInvincibleFriend = false
@@ -102,7 +102,7 @@ class GameScene: SKScene {
             gato.movePositionAt(deltaTime: dt)
         }
         
-        panda.update(opponent: gato)
+        panda.update(deltaTime: dt, opponent: gato)
         
         if gato.isDefeated() && !isGameOver {
             isGameOver = true

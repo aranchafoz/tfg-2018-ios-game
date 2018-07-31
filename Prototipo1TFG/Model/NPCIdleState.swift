@@ -14,5 +14,8 @@ class NPCIdleState: NPCState {
         print("Idle State did enter")
         stopAnimations(from: previousState)
 
+        entity.sprite.run(SKAction.wait(forDuration: 3)) {
+            self.entity.decideState()
+        }
     }
 }
