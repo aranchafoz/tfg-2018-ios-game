@@ -98,7 +98,11 @@ class Character: GKEntity {
             isAttacking = true
             
             let spriteHeight = sprite.size.height
-            let spriteWidth = spriteHeight * 1.17 * CGFloat(getScaleDirection(direction: direction))
+            let scaleFactor = (self.name == "panda") ? 1.525 : 1.17
+            print(scaleFactor)
+            let spriteWidth = spriteHeight * CGFloat(scaleFactor) * CGFloat(getScaleDirection(direction: direction))
+            print("Height: \(spriteHeight)")
+            print("Width: \(spriteWidth)")
         
             let scale = SKAction.scale(to: CGSize(width: spriteWidth, height: spriteHeight), duration: 0)
             let attackAction = animations["normalAttack"]
