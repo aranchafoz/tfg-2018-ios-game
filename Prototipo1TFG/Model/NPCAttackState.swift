@@ -11,8 +11,6 @@ import GameplayKit
 class NPCAttackState: NPCState {
     override func didEnter(from previousState: GKState?) {
         
-        print("Attack State did enter")
-        
         stopAnimations(from: previousState)
         
         // TODO: finish

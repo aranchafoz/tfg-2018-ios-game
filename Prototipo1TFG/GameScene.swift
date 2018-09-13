@@ -152,7 +152,6 @@ class GameScene: SKScene {
     }
     
     @objc func doubleTapped() {
-        print("Double Tap")
         gato.attackWith(attackType: AttackType.NORMAL, onCompletion: nil) // FIXME: set onCompletion optional
         
         checkCollisionsWithEnemy(attacker: self.gato, kicked: self.panda)
@@ -184,7 +183,7 @@ class GameScene: SKScene {
     }
     
     func characterHit(attacker: Character, kicked: Character) {
-        print("El gato y el enemigo han colisionado")
+        //print("El gato y el enemigo han colisionado")
         
         if attacker.isAttacking {
             kicked.isAttackedBy(characther: attacker)

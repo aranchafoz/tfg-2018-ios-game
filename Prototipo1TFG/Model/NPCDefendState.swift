@@ -12,12 +12,15 @@ class NPCDefendState: NPCState {
     
     override func didEnter(from previousState: GKState?) {
         
-        print("Defend State did enter")
-        
         stopAnimations(from: previousState)
         
         // TODO: finish
         entity.defend(onCompletion: entity.decideState)
+        
+        entity.sprite.run(SKAction.wait(forDuration: 5)) {
+            self.entity.isDefending = false
+            self.entity.decideState()
+        }
         
     }
 }

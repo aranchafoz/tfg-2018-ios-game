@@ -11,7 +11,7 @@ import GameplayKit
 class NPCIdleState: NPCState {
     
     override func didEnter(from previousState: GKState?) {
-        print("Idle State did enter")
+
         stopAnimations(from: previousState)
 
         entity.sprite.run(SKAction.wait(forDuration: 3)) {

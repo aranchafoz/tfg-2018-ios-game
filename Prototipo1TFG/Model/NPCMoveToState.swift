@@ -27,8 +27,7 @@ class NPCMoveToState: NPCState {
     }
     
     override func didEnter(from previousState: GKState?) {
-        print("Move To State did enter")
-        
+ 
         stopAnimations(from: previousState)
         
         

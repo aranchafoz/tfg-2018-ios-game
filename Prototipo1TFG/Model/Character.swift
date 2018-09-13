@@ -80,9 +80,13 @@ class Character: GKEntity {
 
         let baseAnimation = SKAction.animate(with: [walkTextures[1]], timePerFrame: 0.15)
         
+        let defendTexture = SKTexture(imageNamed: "\(name)_defend")
+        let defendAnimation = SKAction.animate(with: [defendTexture], timePerFrame: 0.15)
+        
         animations["base"] = baseAnimation
         animations["walk"] = walkAnimation
         animations["normalAttack"] = normalAttackAnimation
+        animations["defend"] = defendAnimation
         
         super.init()
     }
@@ -92,17 +96,18 @@ class Character: GKEntity {
     }
     
     func attackWith(attackType: AttackType, onCompletion: ( () -> Void )? ) {
-        print("El personaje ataca con: \(attackType)")
+        //print("El personaje ataca con: \(attackType)")
+        //if name == "gato" { print("Player Attack") }
         
         if attackType == AttackType.NORMAL {
             isAttacking = true
             
             let spriteHeight = sprite.size.height
             let scaleFactor = (self.name == "panda") ? 1.525 : 1.17
-            print(scaleFactor)
+            //print(scaleFactor)
             let spriteWidth = spriteHeight * CGFloat(scaleFactor) * CGFloat(getScaleDirection(direction: direction))
-            print("Height: \(spriteHeight)")
-            print("Width: \(spriteWidth)")
+            //print("Height: \(spriteHeight)")
+            //print("Width: \(spriteWidth)")
         
             let scale = SKAction.scale(to: CGSize(width: spriteWidth, height: spriteHeight), duration: 0)
             let attackAction = animations["normalAttack"]
@@ -114,7 +119,7 @@ class Character: GKEntity {
             let group2 = SKAction.group([rescale, baseAction!])
             
             let endAttack = SKAction.run {
-                print("Gato is attacking = false")
+                //print("Player Attack End")
                 self.isAttacking = false
             }
             if (onCompletion as ( () -> Void )?) != nil {
@@ -132,20 +137,31 @@ class Character: GKEntity {
     }
     
     func isAttackedBy(characther: Character) {
-        self.life -= characther.normalAttack
+        if !isDefending {
+            self.life -= characther.normalAttack
+        } else {
+            //print("WINNER WINNER")
+        }
     }
     
     func defend( onCompletion: ( () -> Void )? ) {
-        print("El \(name) se está defendiendo")
+        //print("El \(name) se está defendiendo")
         isDefending = true
+        //if name == "panda" { print("NPC Defend Well") }
         // TODO: execute defend animation
-        let wait = SKAction.wait(forDuration: 5)
         
-        if (onCompletion as ( () -> Void )?) != nil {
+        
+        sprite.run(self.animations["defend"]!)
+        
+        sprite.run(SKAction.wait(forDuration: 5)) {
+            self.isDefending = false
             
-            sprite.run(wait, completion: onCompletion!)
-        } else {
-            sprite.run(wait)
+            //if self.name == "panda" { print("NPC Defend End") }
+            
+            
+            if (onCompletion as ( () -> Void )?) != nil {
+                onCompletion!()
+            }
         }
     }
     
