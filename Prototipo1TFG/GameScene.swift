@@ -62,18 +62,19 @@ class GameScene: SKScene {
         
         
         let spriteHeight = playableArea.height * 0.3
-        let spriteSize = CGSize(width: spriteHeight*0.83, height: spriteHeight)
+        let gatoSpriteSize = CGSize(width: spriteHeight*1.547, height: spriteHeight)
+        let pandaSpriteSize = CGSize(width: spriteHeight*1.444, height: spriteHeight)
         
         gato.sprite.name = "friend"
         gato.sprite.zPosition = 3
         gato.sprite.position = CGPoint(x: 1.5*(size.width/6), y: size.height/4)
-        gato.sprite.scale(to: spriteSize)
+        gato.sprite.scale(to: gatoSpriteSize)
         addChild(gato.sprite)
         
         panda.sprite.name = "enemy1"
         panda.sprite.zPosition = 5
         panda.sprite.position = CGPoint(x: 4.5*(size.width/6), y: size.height/4)
-        panda.sprite.scale(to: spriteSize)
+        panda.sprite.scale(to: pandaSpriteSize)
         addChild(panda.sprite)
         
         playBackgroundMusic(filename: "tension_electrica_relax.mp3")

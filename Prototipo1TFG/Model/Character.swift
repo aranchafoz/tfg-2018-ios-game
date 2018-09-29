@@ -102,30 +102,30 @@ class Character: GKEntity {
         if attackType == AttackType.NORMAL {
             isAttacking = true
             
-            let spriteHeight = sprite.size.height
-            let scaleFactor = (self.name == "panda") ? 1.525 : 1.17
+            //let spriteHeight = sprite.size.height
+            //let scaleFactor = (self.name == "panda") ? 1.525 : 1.17
             //print(scaleFactor)
-            let spriteWidth = spriteHeight * CGFloat(scaleFactor) * CGFloat(getScaleDirection(direction: direction))
+            //let spriteWidth = spriteHeight * CGFloat(scaleFactor) * CGFloat(getScaleDirection(direction: direction))
             //print("Height: \(spriteHeight)")
             //print("Width: \(spriteWidth)")
         
-            let scale = SKAction.scale(to: CGSize(width: spriteWidth, height: spriteHeight), duration: 0)
+            //let scale = SKAction.scale(to: CGSize(width: spriteWidth, height: spriteHeight), duration: 0)
             let attackAction = animations["normalAttack"]
-            let group1 = SKAction.group([scale, attackAction!])
+            //let group1 = SKAction.group([scale, attackAction!])
             
             
-            let rescale = SKAction.scale(to: CGSize(width: spriteHeight * 0.83, height: spriteHeight), duration: 0)
+            //let rescale = SKAction.scale(to: CGSize(width: spriteHeight * 0.83, height: spriteHeight), duration: 0)
             let baseAction = animations["base"]
-            let group2 = SKAction.group([rescale, baseAction!])
+            //let group2 = SKAction.group([rescale, baseAction!])
             
             let endAttack = SKAction.run {
                 //print("Player Attack End")
                 self.isAttacking = false
             }
             if (onCompletion as ( () -> Void )?) != nil {
-                sprite.run(SKAction.sequence([group1, group2, SKAction.wait(forDuration: 2), endAttack]), completion: onCompletion!)
+                sprite.run(SKAction.sequence([attackAction!, baseAction!, SKAction.wait(forDuration: 2), endAttack]), completion: onCompletion!)
             } else {
-                sprite.run(SKAction.sequence([group1, group2, SKAction.wait(forDuration: 2), endAttack]))
+                sprite.run(SKAction.sequence([attackAction!, baseAction!, SKAction.wait(forDuration: 2), endAttack]))
             }
             especialCharges += 1
         } else if attackType == AttackType.ESPECIAL && especialCharges >= 3 {
