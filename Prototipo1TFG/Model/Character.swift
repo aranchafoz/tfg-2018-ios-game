@@ -109,9 +109,9 @@ class Character: GKEntity {
             //print("Height: \(spriteHeight)")
             //print("Width: \(spriteWidth)")
         
-            //let scale = SKAction.scale(to: CGSize(width: spriteWidth, height: spriteHeight), duration: 0)
+            let scale = SKAction.scale(to: CGSize(width: sprite.size.width * CGFloat(getScaleDirection(direction: direction)), height: sprite.size.height), duration: 0)
             let attackAction = animations["normalAttack"]
-            //let group1 = SKAction.group([scale, attackAction!])
+            let group1 = SKAction.group([scale, attackAction!])
             
             
             //let rescale = SKAction.scale(to: CGSize(width: spriteHeight * 0.83, height: spriteHeight), duration: 0)
@@ -123,9 +123,9 @@ class Character: GKEntity {
                 self.isAttacking = false
             }
             if (onCompletion as ( () -> Void )?) != nil {
-                sprite.run(SKAction.sequence([attackAction!, baseAction!, SKAction.wait(forDuration: 2), endAttack]), completion: onCompletion!)
+                sprite.run(SKAction.sequence([group1, baseAction!, SKAction.wait(forDuration: 2), endAttack]), completion: onCompletion!)
             } else {
-                sprite.run(SKAction.sequence([attackAction!, baseAction!, SKAction.wait(forDuration: 2), endAttack]))
+                sprite.run(SKAction.sequence([group1, baseAction!, SKAction.wait(forDuration: 2), endAttack]))
             }
             especialCharges += 1
         } else if attackType == AttackType.ESPECIAL && especialCharges >= 3 {
@@ -229,6 +229,12 @@ class Character: GKEntity {
             return -1
         default:
             return 0
+        }
+    }
+    
+    func updateDirection(opponentPosition: CGPoint) {
+        if isDefending || isAttacking {
+            self.direction = (opponentPosition.x > sprite.position.x) ? Direction.RIGHT : Direction.LEFT
         }
     }
 }
