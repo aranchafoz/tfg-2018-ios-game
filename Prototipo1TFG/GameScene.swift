@@ -33,6 +33,9 @@ class GameScene: SKScene {
     var isGameOver: Bool
     var updates: Int
     
+    let catLive: SKLabelNode
+    let pandaLive: SKLabelNode
+    
     override init(size: CGSize) {
         // Define playable area
         let maxAspectRatio: CGFloat = 16.0/9.0
@@ -49,6 +52,9 @@ class GameScene: SKScene {
         
         isGameOver = false
         updates = 0
+        
+        catLive = SKLabelNode(fontNamed: "Arial")
+        pandaLive = SKLabelNode(fontNamed: "Arial")
         
         super.init(size: size)
     }
@@ -87,6 +93,26 @@ class GameScene: SKScene {
         let doubleTap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
         doubleTap.numberOfTapsRequired = 2
         view.addGestureRecognizer(doubleTap)
+        
+        
+        // HUB
+        catLive.text = "\(gato.name): \(gato.life)"
+        catLive.position = CGPoint(x: size.width * 0.25, y: size.height * 0.8)
+        catLive.fontSize = 80
+        catLive.fontColor = UIColor.red
+        catLive.verticalAlignmentMode = .center
+        catLive.horizontalAlignmentMode = .center
+        catLive.zPosition = 10
+        addChild(catLive)
+        
+        pandaLive.text = "\(panda.name): \(panda.life)"
+        pandaLive.position = CGPoint(x: size.width * 0.75, y: size.height * 0.8)
+        pandaLive.fontSize = 80
+        pandaLive.fontColor = UIColor.red
+        pandaLive.verticalAlignmentMode = .center
+        pandaLive.horizontalAlignmentMode = .center
+        pandaLive.zPosition = 10
+        addChild(pandaLive)
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -144,6 +170,11 @@ class GameScene: SKScene {
         } else {
             updates += 1
         }
+        
+        
+        // HUB
+        catLive.text = "\(gato.name): \(gato.life)"
+        pandaLive.text = "\(panda.name): \(panda.life)"
     }
     
     func sceneTouched(touchedLocation: CGPoint) {
