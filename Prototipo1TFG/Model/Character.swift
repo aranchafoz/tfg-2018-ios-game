@@ -158,6 +158,7 @@ class Character: GKEntity {
             
             //if self.name == "panda" { print("NPC Defend End") }
             
+            self.sprite.run(self.animations["base"]!)
             
             if (onCompletion as ( () -> Void )?) != nil {
                 onCompletion!()

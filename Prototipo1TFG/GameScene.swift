@@ -53,6 +53,7 @@ class GameScene: SKScene {
         isGameOver = false
         updates = 0
         
+        // HUD
         catLive = SKLabelNode(fontNamed: "Arial")
         pandaLive = SKLabelNode(fontNamed: "Arial")
         
@@ -83,19 +84,14 @@ class GameScene: SKScene {
         addChild(gato.sprite)
         
         panda.sprite.name = "enemy1"
-        panda.sprite.zPosition = 5
+        panda.sprite.zPosition = 3
         panda.sprite.position = CGPoint(x: 4.5*(size.width/6), y: size.height/4)
         panda.sprite.scale(to: pandaSpriteSize)
         addChild(panda.sprite)
         
         playBackgroundMusic(filename: "tension_electrica_relax.mp3")
         
-        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
-        doubleTap.numberOfTapsRequired = 2
-        view.addGestureRecognizer(doubleTap)
-        
-        
-        // HUB
+        // HUD
         catLive.text = "\(gato.name): \(gato.life)"
         catLive.position = CGPoint(x: size.width * 0.25, y: size.height * 0.8)
         catLive.fontSize = 80
@@ -172,9 +168,7 @@ class GameScene: SKScene {
         }
         
         
-        // HUB
-        catLive.text = "\(gato.name): \(gato.life)"
-        pandaLive.text = "\(panda.name): \(panda.life)"
+        updateHUD()
     }
     
     func sceneTouched(touchedLocation: CGPoint) {
@@ -184,20 +178,31 @@ class GameScene: SKScene {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first! as UITouch
-        let location = touch.location(in: self)
-        sceneTouched(touchedLocation: location)
+        let touchPosition = touch.location(in: self)
+        
+        if (touchPosition.x) > self.size.width/2 {
+            
+            gato.attackWith(attackType: AttackType.NORMAL, onCompletion: nil) // FIXME: set onCompletion optional
+            
+            checkCollisionsWithEnemy(attacker: self.gato, kicked: self.panda)
+            
+        } else {
+            
+            gato.defend(onCompletion: nil)
+            
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if gato.isDefending {
+            gato.stopAnimation(action: "defend")
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first! as UITouch
         let location = touch.location(in: self)
         sceneTouched(touchedLocation: location)
-    }
-    
-    @objc func doubleTapped() {
-        gato.attackWith(attackType: AttackType.NORMAL, onCompletion: nil) // FIXME: set onCompletion optional
-        
-        checkCollisionsWithEnemy(attacker: self.gato, kicked: self.panda)
     }
     
     func checkBounds() {
@@ -244,8 +249,6 @@ class GameScene: SKScene {
     
     func checkCollisionsWithEnemy(attacker: Character, kicked: Character) {
         
-        // FIXME: Refactor enumerateNode withName "enemy*" to kicked.type
-        // Comprobar colisión con enemigo
         //enumerateChildNodes(withName: "enemy*") { (node, _ in) in
             //let enemy = node as! SKSpriteNode
             
@@ -283,6 +286,11 @@ class GameScene: SKScene {
             }
         //}
 
+    }
+    
+    func updateHUD() {
+        catLive.text = "\(gato.name): \(gato.life)"
+        pandaLive.text = "\(panda.name): \(panda.life)"
     }
     
     override func didEvaluateActions() {
