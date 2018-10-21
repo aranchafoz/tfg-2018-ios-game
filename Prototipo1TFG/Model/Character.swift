@@ -41,6 +41,7 @@ class Character: GKEntity {
     var especialCharges: Int
     
     var isAttacking: Bool
+    var attackHaveHitEnemy: Bool
     var isDefending: Bool
     
     var isInvincible: Bool
@@ -59,6 +60,8 @@ class Character: GKEntity {
         especialCharges = 0
         
         isAttacking = false
+        attackHaveHitEnemy = false
+        
         isDefending = false
         
         isInvincible = false
@@ -121,6 +124,7 @@ class Character: GKEntity {
             let endAttack = SKAction.run {
                 //print("Player Attack End")
                 self.isAttacking = false
+                self.attackHaveHitEnemy = false
             }
             if (onCompletion as ( () -> Void )?) != nil {
                 sprite.run(SKAction.sequence([group1, baseAction!, SKAction.wait(forDuration: 2), endAttack]), completion: onCompletion!)

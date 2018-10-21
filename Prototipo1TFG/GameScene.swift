@@ -234,6 +234,7 @@ class GameScene: SKScene {
         //print("El gato y el enemigo han colisionado")
         
         if attacker.isAttacking {
+            attacker.attackHaveHitEnemy = true
             kicked.isAttackedBy(characther: attacker)
             run(catSound, withKey: "hitFriend") //run(bearSound, withKey: "hitEnemy")
             kicked.makeInvincible()
@@ -252,39 +253,36 @@ class GameScene: SKScene {
         //enumerateChildNodes(withName: "enemy*") { (node, _ in) in
             //let enemy = node as! SKSpriteNode
             
-            if !kicked.isInvincible {
+        if !kicked.isInvincible {
+        
+            let attackerFrame = attacker.sprite.frame
+            let kickedFrame = kicked.sprite.frame
             
-                let attackerFrame = attacker.sprite.frame
-                let kickedFrame = kicked.sprite.frame
-                
-                var startX: CGFloat = 0.0
-            
-                if attacker.direction == Direction.RIGHT {
-                    startX = attackerFrame.midX
-                } else if attacker.direction == Direction.LEFT {
-                    startX = attackerFrame.minX
-                }
-                
-                let attackRect = CGRect(x: startX, y: attackerFrame.minY, width: attackerFrame.width/2, height: attackerFrame.height)
-                
-                var horizontalReduction: CGFloat = 0
-                
-                if kicked.isDefending {
-                    horizontalReduction = (kicked.name == "panda") ? pandaDefendHorizontalReduction : gatoDefendHorizontalReduction
-                } else if !kicked.isAttacking {
-                    horizontalReduction = (kicked.name == "panda") ? pandaWalkHorizontalReduction : gatoWalkHorizontalReduction
-                }
-                
-                let kickedRect = CGRect(x: kickedFrame.minX + horizontalReduction, y: kickedFrame.minY, width: kickedFrame.width - (horizontalReduction*2), height: kickedFrame.height)
-                // Si colisiona con el ataque del gato
-                if kickedRect.intersects(attackRect) {
-                    // panda
-                    //if kicked.name == "enemy1" {
-                        self.characterHit(attacker: attacker, kicked: kicked)
-                    //}
-                }
+            var startX: CGFloat = 0.0
+        
+            if attacker.direction == Direction.RIGHT {
+                startX = attackerFrame.midX
+            } else if attacker.direction == Direction.LEFT {
+                startX = attackerFrame.minX
             }
-        //}
+            
+            let attackRect = CGRect(x: startX, y: attackerFrame.minY, width: attackerFrame.width/2, height: attackerFrame.height)
+            
+            var horizontalReduction: CGFloat = 0
+            
+            if kicked.isDefending {
+                horizontalReduction = (kicked.name == "panda") ? pandaDefendHorizontalReduction : gatoDefendHorizontalReduction
+            } else if !kicked.isAttacking {
+                horizontalReduction = (kicked.name == "panda") ? pandaWalkHorizontalReduction : gatoWalkHorizontalReduction
+            }
+            
+            let kickedRect = CGRect(x: kickedFrame.minX + horizontalReduction, y: kickedFrame.minY, width: kickedFrame.width - (horizontalReduction*2), height: kickedFrame.height)
+            
+            // Si colisiona con el ataque del gato
+            if kickedRect.intersects(attackRect) {
+                self.characterHit(attacker: attacker, kicked: kicked)
+            }
+        }
 
     }
     
@@ -294,6 +292,9 @@ class GameScene: SKScene {
     }
     
     override func didEvaluateActions() {
-        //checkCollisions()
+        print(panda.isAttacking)
+        if panda.isAttacking && !panda.attackHaveHitEnemy {
+            checkCollisionsWithEnemy(attacker: panda, kicked: gato)
+        }
     }
 }
