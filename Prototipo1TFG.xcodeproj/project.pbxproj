@@ -15,6 +15,7 @@
 		8F24FC8E210A16F9005BD9DF /* NPCState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24FC8D210A16F9005BD9DF /* NPCState.swift */; };
 		8F9AB2DC20EF7E99000E44DB /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AB2DB20EF7E99000E44DB /* Character.swift */; };
 		8F9AB2DE20EF7EF0000E44DB /* NPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AB2DD20EF7EF0000E44DB /* NPC.swift */; };
+		8FE07813218159B8005884A8 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE07812218159B8005884A8 /* Constants.swift */; };
 		8FE3F2C220E2AFBD00D02C09 /* MathUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F2C120E2AFBD00D02C09 /* MathUtils.swift */; };
 		8FE3F2D020E653EB00D02C09 /* tension_tambores.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8FE3F2C520E653EB00D02C09 /* tension_tambores.mp3 */; };
 		8FE3F2D120E653EB00D02C09 /* tension_electrica_relax.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8FE3F2C620E653EB00D02C09 /* tension_electrica_relax.mp3 */; };
@@ -51,6 +52,7 @@
 		8F24FC8D210A16F9005BD9DF /* NPCState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NPCState.swift; sourceTree = "<group>"; };
 		8F9AB2DB20EF7E99000E44DB /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		8F9AB2DD20EF7EF0000E44DB /* NPC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NPC.swift; sourceTree = "<group>"; };
+		8FE07812218159B8005884A8 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8FE3F2C120E2AFBD00D02C09 /* MathUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathUtils.swift; sourceTree = "<group>"; };
 		8FE3F2C520E653EB00D02C09 /* tension_tambores.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tension_tambores.mp3; sourceTree = "<group>"; };
 		8FE3F2C620E653EB00D02C09 /* tension_electrica_relax.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tension_electrica_relax.mp3; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				8FECED3920874CAA0094C789 /* GameScene.swift */,
 				8FE3F2DD20E7E74700D02C09 /* GameOverScene.swift */,
 				8FECED3B20874CAA0094C789 /* GameViewController.swift */,
+				8FE07812218159B8005884A8 /* Constants.swift */,
 				8FE3F2C120E2AFBD00D02C09 /* MathUtils.swift */,
 				8FECED3D20874CAA0094C789 /* Main.storyboard */,
 				8FECED4020874CAB0094C789 /* Assets.xcassets */,
@@ -295,6 +298,7 @@
 				8F24FC8420FE7BB3005BD9DF /* NPCAttackState.swift in Sources */,
 				8FE3F2DE20E7E74700D02C09 /* GameOverScene.swift in Sources */,
 				8F24FC8620FE7BCA005BD9DF /* NPCIdleState.swift in Sources */,
+				8FE07813218159B8005884A8 /* Constants.swift in Sources */,
 				8FECED3A20874CAA0094C789 /* GameScene.swift in Sources */,
 				8F24FC8E210A16F9005BD9DF /* NPCState.swift in Sources */,
 				8F24FC882107AA32005BD9DF /* NPCDefendState.swift in Sources */,

@@ -8,10 +8,6 @@
 
 import SpriteKit
 
-let gatoWalkHorizontalReduction: CGFloat = 125
-let pandaWalkHorizontalReduction: CGFloat = 107
-let gatoDefendHorizontalReduction: CGFloat = 55
-let pandaDefendHorizontalReduction: CGFloat = 54
 
 class GameScene: SKScene {
     
@@ -233,9 +229,6 @@ class GameScene: SKScene {
     }
     
     func checkCollisionsWithEnemy(attacker: Character, kicked: Character) {
-        
-        //enumerateChildNodes(withName: "enemy*") { (node, _ in) in
-            //let enemy = node as! SKSpriteNode
             
         if !kicked.isInvincible {
         

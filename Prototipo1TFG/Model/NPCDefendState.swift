@@ -14,7 +14,6 @@ class NPCDefendState: NPCState {
         
         stopAnimations(from: previousState)
         
-        // TODO: finish
         entity.defend(onCompletion: entity.decideState)
         
         entity.sprite.run(SKAction.wait(forDuration: 5)) {

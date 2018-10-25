@@ -10,8 +10,6 @@ import Foundation
 import SpriteKit
 import GameplayKit
 
-let horizontalReduction: CGFloat = 107
-
 enum AttackType {
     case NORMAL
     case ESPECIAL
@@ -33,7 +31,7 @@ class Character: GKEntity {
     var life: CGFloat
     
     let spritePixelsPerSecond: CGFloat
-    var velocity = CGPoint(x: 5, y: 5) //CGPoint.zero
+    var velocity = CGPoint.zero
     
     let normalAttack: CGFloat = 20.0
     let especialAttack: CGFloat = 50.0
@@ -101,30 +99,17 @@ class Character: GKEntity {
     }
     
     func attackWith(attackType: AttackType, onCompletion: ( () -> Void )? ) {
-        //print("El personaje ataca con: \(attackType)")
-        //if name == "gato" { print("Player Attack") }
         
         if attackType == AttackType.NORMAL {
             isAttacking = true
-            
-            //let spriteHeight = sprite.size.height
-            //let scaleFactor = (self.name == "panda") ? 1.525 : 1.17
-            //print(scaleFactor)
-            //let spriteWidth = spriteHeight * CGFloat(scaleFactor) * CGFloat(getScaleDirection(direction: direction))
-            //print("Height: \(spriteHeight)")
-            //print("Width: \(spriteWidth)")
         
             let scale = SKAction.scale(to: CGSize(width: sprite.size.width * CGFloat(getScaleDirection(direction: direction)), height: sprite.size.height), duration: 0)
             let attackAction = animations["normalAttack"]
             let group1 = SKAction.group([scale, attackAction!])
             
-            
-            //let rescale = SKAction.scale(to: CGSize(width: spriteHeight * 0.83, height: spriteHeight), duration: 0)
             let baseAction = animations["base"]
-            //let group2 = SKAction.group([rescale, baseAction!])
             
             let endAttack = SKAction.run {
-                //print("Player Attack End")
                 self.isAttacking = false
                 self.attackHaveHitEnemy = false
             }
@@ -136,7 +121,7 @@ class Character: GKEntity {
             especialCharges += 1
         } else if attackType == AttackType.ESPECIAL && especialCharges >= 3 {
             
-            // TODO: execute especial animation
+            // MARK: execute especial animation
             
             especialCharges = 0
         }
@@ -145,24 +130,17 @@ class Character: GKEntity {
     func isAttackedBy(characther: Character) {
         if !isDefending {
             self.life -= characther.normalAttack
-        } else {
-            //print("WINNER WINNER")
         }
     }
     
     func defend( onCompletion: ( () -> Void )? ) {
-        //print("El \(name) se está defendiendo")
-        isDefending = true
-        //if name == "panda" { print("NPC Defend Well") }
-        // TODO: execute defend animation
         
+        isDefending = true
         
         sprite.run(self.animations["defend"]!)
         
         sprite.run(SKAction.wait(forDuration: 5)) {
             self.isDefending = false
-            
-            //if self.name == "panda" { print("NPC Defend End") }
             
             self.sprite.run(self.animations["base"]!)
             
@@ -173,7 +151,7 @@ class Character: GKEntity {
     }
     
     func isDefeated() -> Bool {
-        // TODO: if true -> execute defeated animation
+        // MARK: if true -> execute defeated animation
         return life <= 0.0
     }
     
@@ -259,9 +237,19 @@ class Character: GKEntity {
         let futureSprite = sprite.copy() as! SKNode
         futureSprite.position = nextPosition
         
+        let spriteHorizontalReduction = (futureSprite.name == "panda") ? pandaWalkHorizontalReduction : gatoWalkHorizontalReduction
+        
+        let spriteRect = CGRect(x: futureSprite.frame.minX + spriteHorizontalReduction, y: futureSprite.frame.minY, width: futureSprite.frame.width - (spriteHorizontalReduction*2), height: futureSprite.frame.height)
         
         for node in obstacles {
-            if node.intersects(futureSprite) {
+            
+            
+            let opponentHorizontalReduction = (futureSprite.name == "panda") ? pandaWalkHorizontalReduction : gatoWalkHorizontalReduction
+            
+            
+            let opponentRect = CGRect(x: node.frame.minX + opponentHorizontalReduction, y: node.frame.minY, width: node.frame.width - (opponentHorizontalReduction*2), height: node.frame.height)
+            
+            if opponentRect.intersects(spriteRect) {
                 return true
             }
         }
