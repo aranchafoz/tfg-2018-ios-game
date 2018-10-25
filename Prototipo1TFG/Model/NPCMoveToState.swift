@@ -17,7 +17,11 @@ class NPCMoveToState: NPCState {
         
         entity.moveTo(location: opponentLocation)
         
-        if(entity.sprite.position - opponentLocation).length() < entity.velocity.length() * CGFloat(seconds) {
+        // TODO: Add if clause about collitions with other characters
+        
+        //if(entity.sprite.position - opponentLocation).length() < entity.velocity.length() * CGFloat(seconds) {
+        if entity.arriveTo(destiny: opponentLocation, deltaTime: seconds)
+            || entity.collideWith(obstacles: [entity.opponent.sprite], deltaTime: seconds) {
             entity.velocity = CGPoint.zero
             entity.decideState()
         } else {

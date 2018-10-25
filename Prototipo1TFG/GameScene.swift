@@ -118,12 +118,16 @@ class GameScene: SKScene {
         } else {
             dt = 0
         }
-        
         lastUpdatedTime = currentTime
         
         checkBounds()
         
-        if(gato.sprite.position - lastTouchLocation).length() < gato.velocity.length() * CGFloat(dt) {
+        
+        panda.updateDirection(opponentPosition: gato.sprite.position)
+        gato.updateDirection(opponentPosition: panda.sprite.position)
+        
+        if gato.arriveTo(destiny: lastTouchLocation, deltaTime: dt)
+            || gato.collideWith(obstacles: [panda.sprite], deltaTime: dt) {
             gato.velocity = CGPoint.zero
             gato.stopAnimation(action: "walk")
         } else {
@@ -132,43 +136,10 @@ class GameScene: SKScene {
         
         panda.update(deltaTime: dt, opponent: gato)
         
-        panda.updateDirection(opponentPosition: gato.sprite.position)
-        gato.updateDirection(opponentPosition: panda.sprite.position)
-        
-        
-        // COMPROBAR FIN
-        
-        if gato.isDefeated() && !isGameOver {
-            isGameOver = true
-            print("Tu personaje se ha quedado sin vida. You lose")
-            
-            backgroundAudioPlayer.stop()
-            
-            // Scene change
-            let gameOverScene = GameOverScene(size: size, hasWon: false)
-            gameOverScene.scaleMode = scaleMode
-            let transition = SKTransition.flipVertical(withDuration: 1.0)
-            view?.presentScene(gameOverScene, transition: transition)
-        }
-        
-        
-        if panda.isDefeated() && !isGameOver {
-            isGameOver = true
-            print("You win")
-            
-            backgroundAudioPlayer.stop()
-            
-            // Scene change
-            let gameOverScene = GameOverScene(size: size, hasWon: true)
-            gameOverScene.scaleMode = scaleMode
-            let transition = SKTransition.flipVertical(withDuration: 1.0)
-            view?.presentScene(gameOverScene, transition: transition)
-        } else {
-            updates += 1
-        }
-        
         
         updateHUD()
+    
+        checkGameEnd()
     }
     
     func sceneTouched(touchedLocation: CGPoint) {
@@ -182,7 +153,7 @@ class GameScene: SKScene {
         
         if (touchPosition.x) > self.size.width/2 {
             
-            gato.attackWith(attackType: AttackType.NORMAL, onCompletion: nil) // FIXME: set onCompletion optional
+            gato.attackWith(attackType: AttackType.NORMAL, onCompletion: nil)
             
             checkCollisionsWithEnemy(attacker: self.gato, kicked: self.panda)
             
@@ -208,26 +179,39 @@ class GameScene: SKScene {
     func checkBounds() {
         let bottomLetf = CGPoint(x: 0, y: playableArea.minY)
         let upperRigth = CGPoint(x: playableArea.width, y: playableArea.maxY)
-        
+
         if gato.sprite.position.x <= bottomLetf.x {
             gato.sprite.position.x = bottomLetf.x
             gato.velocity.x = -gato.velocity.x
         }
-        
+
         if gato.sprite.position.y <= bottomLetf.y {
             gato.sprite.position.y = bottomLetf.y
             gato.velocity.y = -gato.velocity.y
         }
-        
+
         if gato.sprite.position.x >= upperRigth.x {
             gato.sprite.position.x = upperRigth.x
             gato.velocity.x = -gato.velocity.x
         }
-        
+
         if gato.sprite.position.y >= upperRigth.y {
             gato.sprite.position.y = upperRigth.y
             gato.velocity.y = -gato.velocity.y
         }
+    }
+    
+    
+    func checkCharactersOverlap() {
+        let gatoFrame = gato.sprite.frame
+        let pandaFrame = panda.sprite.frame
+
+        // TODO: Implement
+        if gatoFrame.maxX >= pandaFrame.minX {
+            gato.velocity.x = 0
+            panda.velocity.x = 0
+        }
+    
     }
     
     func characterHit(attacker: Character, kicked: Character) {
@@ -291,10 +275,42 @@ class GameScene: SKScene {
         pandaLive.text = "\(panda.name): \(panda.life)"
     }
     
+    func checkGameEnd() {
+        if gato.isDefeated() && !isGameOver {
+            isGameOver = true
+            print("Tu personaje se ha quedado sin vida. You lose")
+            
+            backgroundAudioPlayer.stop()
+            
+            // Scene change
+            let gameOverScene = GameOverScene(size: size, hasWon: false)
+            gameOverScene.scaleMode = scaleMode
+            let transition = SKTransition.flipVertical(withDuration: 1.0)
+            view?.presentScene(gameOverScene, transition: transition)
+        }
+        
+        if panda.isDefeated() && !isGameOver {
+            isGameOver = true
+            print("You win")
+            
+            backgroundAudioPlayer.stop()
+            
+            // Scene change
+            let gameOverScene = GameOverScene(size: size, hasWon: true)
+            gameOverScene.scaleMode = scaleMode
+            let transition = SKTransition.flipVertical(withDuration: 1.0)
+            view?.presentScene(gameOverScene, transition: transition)
+        } else {
+            updates += 1
+        }
+    }
+    
     override func didEvaluateActions() {
-        print(panda.isAttacking)
+        
+        // Enemy attack
         if panda.isAttacking && !panda.attackHaveHitEnemy {
             checkCollisionsWithEnemy(attacker: panda, kicked: gato)
         }
+        
     }
 }

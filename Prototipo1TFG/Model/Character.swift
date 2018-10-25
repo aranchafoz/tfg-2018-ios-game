@@ -10,6 +10,8 @@ import Foundation
 import SpriteKit
 import GameplayKit
 
+let horizontalReduction: CGFloat = 107
+
 enum AttackType {
     case NORMAL
     case ESPECIAL
@@ -31,7 +33,7 @@ class Character: GKEntity {
     var life: CGFloat
     
     let spritePixelsPerSecond: CGFloat
-    var velocity = CGPoint.zero
+    var velocity = CGPoint(x: 5, y: 5) //CGPoint.zero
     
     let normalAttack: CGFloat = 20.0
     let especialAttack: CGFloat = 50.0
@@ -177,12 +179,12 @@ class Character: GKEntity {
     
     func moveTo(location: CGPoint) {
         let offset = location - sprite.position
-        
+
         let direction = offset.normalize() // Un vector unitario del movimiento
         self.velocity = direction * spritePixelsPerSecond
-        
+
         self.direction = (offset.x > 0) ? Direction.RIGHT : Direction.LEFT
-        
+
         animate(action: "walk")
     }
     
@@ -241,5 +243,30 @@ class Character: GKEntity {
         if isDefending || isAttacking {
             self.direction = (opponentPosition.x > sprite.position.x) ? Direction.RIGHT : Direction.LEFT
         }
+    }
+    
+    func arriveTo(destiny: CGPoint, deltaTime: TimeInterval) -> Bool {
+        let remainingWalk = (sprite.position - destiny).length()
+        let nextMove = velocity.length() * CGFloat(deltaTime)
+        return remainingWalk < nextMove
+    }
+    
+    func collideWith(obstacles: [SKNode], deltaTime: TimeInterval) -> Bool {
+        let nextAmount = velocity * CGFloat(deltaTime)
+        var nextPosition = CGPoint(x: sprite.position.x, y: sprite.position.y)
+        nextPosition += nextAmount
+        
+        let futureSprite = sprite.copy() as! SKNode
+        futureSprite.position = nextPosition
+        
+        
+        for node in obstacles {
+            if node.intersects(futureSprite) {
+                return true
+            }
+        }
+        
+        return false
+        
     }
 }
