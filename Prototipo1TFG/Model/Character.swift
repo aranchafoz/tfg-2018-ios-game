@@ -29,6 +29,7 @@ class Character: GKEntity {
     let name: String
     
     var life: CGFloat
+    let maxLife: CGFloat
     
     let spritePixelsPerSecond: CGFloat
     var velocity = CGPoint.zero
@@ -53,6 +54,7 @@ class Character: GKEntity {
         self.name = name
         
         life = lifePoints
+        maxLife = lifePoints
         
         self.spritePixelsPerSecond = spritePixelsPerSecond
         
@@ -242,7 +244,6 @@ class Character: GKEntity {
         let spriteRect = CGRect(x: futureSprite.frame.minX + spriteHorizontalReduction, y: futureSprite.frame.minY, width: futureSprite.frame.width - (spriteHorizontalReduction*2), height: futureSprite.frame.height)
         
         for node in obstacles {
-            
             
             let opponentHorizontalReduction = (futureSprite.name == "panda") ? pandaWalkHorizontalReduction : gatoWalkHorizontalReduction
             

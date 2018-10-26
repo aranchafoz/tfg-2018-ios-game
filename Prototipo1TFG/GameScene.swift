@@ -29,8 +29,14 @@ class GameScene: SKScene {
     var isGameOver: Bool
     var updates: Int
     
-    let catLive: SKLabelNode
-    let pandaLive: SKLabelNode
+    let catName: SKLabelNode
+    let pandaName: SKLabelNode
+    
+    let lifeBarSize: CGSize
+    let catLifeBar: SKSpriteNode
+    let catLifeBarBack: SKSpriteNode
+    let pandaLifeBar: SKSpriteNode
+    let pandaLifeBarBack: SKSpriteNode
     
     override init(size: CGSize) {
         // Define playable area
@@ -41,7 +47,7 @@ class GameScene: SKScene {
         
         // Init sprites
         gato = Character(name: "gato", lifePoints: 200, spritePixelsPerSecond: 300)
-        panda = NPC(name: "panda", lifePoints: 200, spritePixelsPerSecond: 200, opponent: gato)
+        panda = NPC(name: "panda", lifePoints: 200, spritePixelsPerSecond: 150, opponent: gato)
         
 
         isInvincibleFriend = false
@@ -50,8 +56,16 @@ class GameScene: SKScene {
         updates = 0
         
         // HUD
-        catLive = SKLabelNode(fontNamed: "Arial")
-        pandaLive = SKLabelNode(fontNamed: "Arial")
+        catName = SKLabelNode(fontNamed: "AvenirNext-Bold")
+        pandaName = SKLabelNode(fontNamed: "AvenirNext-Bold")
+        
+        lifeBarSize = CGSize(width: size.width * 0.4, height: 65)
+        
+        catLifeBar = SKSpriteNode(color: SKColor.green, size: lifeBarSize)
+        catLifeBarBack = SKSpriteNode(color: SKColor.black, size: CGSize(width: lifeBarSize.width + 10, height: lifeBarSize.height + 10))
+        
+        pandaLifeBar = SKSpriteNode(color: SKColor.green, size: lifeBarSize)
+        pandaLifeBarBack = SKSpriteNode(color: SKColor.black, size: CGSize(width: lifeBarSize.width + 10, height: lifeBarSize.height + 10))
         
         super.init(size: size)
     }
@@ -88,23 +102,43 @@ class GameScene: SKScene {
         playBackgroundMusic(filename: "tension_electrica_relax.mp3")
         
         // HUD
-        catLive.text = "\(gato.name): \(gato.life)"
-        catLive.position = CGPoint(x: size.width * 0.25, y: size.height * 0.8)
-        catLive.fontSize = 80
-        catLive.fontColor = UIColor.red
-        catLive.verticalAlignmentMode = .center
-        catLive.horizontalAlignmentMode = .center
-        catLive.zPosition = 10
-        addChild(catLive)
+        catName.text = "\(gato.name)"
+        catName.position = CGPoint(x: size.width * 0.055, y: size.height * 0.8 + 50)
+        catName.fontSize = 50
+        catName.fontColor = UIColor.black
+        catName.verticalAlignmentMode = .center
+        catName.horizontalAlignmentMode = .left
+        catName.zPosition = 10
+        addChild(catName)
         
-        pandaLive.text = "\(panda.name): \(panda.life)"
-        pandaLive.position = CGPoint(x: size.width * 0.75, y: size.height * 0.8)
-        pandaLive.fontSize = 80
-        pandaLive.fontColor = UIColor.red
-        pandaLive.verticalAlignmentMode = .center
-        pandaLive.horizontalAlignmentMode = .center
-        pandaLive.zPosition = 10
-        addChild(pandaLive)
+        pandaName.text = "\(panda.name)"
+        pandaName.position = CGPoint(x: size.width * 0.555, y: size.height * 0.8 + 50)
+        pandaName.fontSize = 50
+        pandaName.fontColor = UIColor.black
+        pandaName.verticalAlignmentMode = .center
+        pandaName.horizontalAlignmentMode = .left
+        pandaName.zPosition = 10
+        addChild(pandaName)
+        
+        catLifeBar.position = CGPoint(x: size.width * 0.05, y: size.height * 0.76)
+        catLifeBar.zPosition = 10
+        catLifeBar.anchorPoint = CGPoint(x: -0.007, y: -0.075)
+        addChild(catLifeBar)
+        
+        catLifeBarBack.position = CGPoint(x: size.width * 0.05, y: size.height * 0.76)
+        catLifeBarBack.zPosition = 9
+        catLifeBarBack.anchorPoint = CGPoint(x: 0, y: 0)
+        addChild(catLifeBarBack)
+        
+        pandaLifeBar.position = CGPoint(x: size.width * 0.55, y: size.height * 0.76)
+        pandaLifeBar.zPosition = 10
+        pandaLifeBar.anchorPoint = CGPoint(x: -0.007, y: -0.075)
+        addChild(pandaLifeBar)
+        
+        pandaLifeBarBack.position = CGPoint(x: size.width * 0.55, y: size.height * 0.76)
+        pandaLifeBarBack.zPosition = 9
+        pandaLifeBarBack.anchorPoint = CGPoint(x: 0, y: 0)
+        addChild(pandaLifeBarBack)
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -118,7 +152,6 @@ class GameScene: SKScene {
         
         checkBounds()
         
-        
         panda.updateDirection(opponentPosition: gato.sprite.position)
         gato.updateDirection(opponentPosition: panda.sprite.position)
         
@@ -131,7 +164,6 @@ class GameScene: SKScene {
         }
         
         panda.update(deltaTime: dt, opponent: gato)
-        
         
         updateHUD()
     
@@ -197,21 +229,7 @@ class GameScene: SKScene {
         }
     }
     
-    
-    func checkCharactersOverlap() {
-        let gatoFrame = gato.sprite.frame
-        let pandaFrame = panda.sprite.frame
-
-        // TODO: Implement
-        if gatoFrame.maxX >= pandaFrame.minX {
-            gato.velocity.x = 0
-            panda.velocity.x = 0
-        }
-    
-    }
-    
     func characterHit(attacker: Character, kicked: Character) {
-        //print("El gato y el enemigo han colisionado")
         
         if attacker.isAttacking {
             attacker.attackHaveHitEnemy = true
@@ -264,8 +282,11 @@ class GameScene: SKScene {
     }
     
     func updateHUD() {
-        catLive.text = "\(gato.name): \(gato.life)"
-        pandaLive.text = "\(panda.name): \(panda.life)"
+        let catLifePercentage = gato.life / gato.maxLife
+        catLifeBar.size = CGSize(width: lifeBarSize.width * catLifePercentage, height: lifeBarSize.height)
+        
+        let pandaLifePercentage = panda.life / panda.maxLife
+        pandaLifeBar.size = CGSize(width: lifeBarSize.width * pandaLifePercentage, height: lifeBarSize.height)
     }
     
     func checkGameEnd() {
