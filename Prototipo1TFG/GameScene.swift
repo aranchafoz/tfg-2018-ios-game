@@ -46,7 +46,7 @@ class GameScene: SKScene {
         playableArea = CGRect(x: 0, y: playableMargin, width: size.width, height: playableHeight)
         
         // Init sprites
-        gato = Character(name: "gato", lifePoints: 200, spritePixelsPerSecond: 300)
+        gato = Character(name: "gato", lifePoints: 200, spritePixelsPerSecond: 500)
         panda = NPC(name: "panda", lifePoints: 200, spritePixelsPerSecond: 150, opponent: gato)
         
 
@@ -76,7 +76,7 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         // Background
-        let background = SKSpriteNode(imageNamed: "back1")
+        let background = SKSpriteNode(imageNamed: "escenario1")
         background.zPosition = -1
         background.position = CGPoint(x: size.width/2, y: size.height/2)
         background.scale(to: CGSize(width: playableArea.width, height: playableArea.height))

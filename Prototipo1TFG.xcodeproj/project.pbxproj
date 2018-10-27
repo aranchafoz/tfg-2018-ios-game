@@ -13,6 +13,10 @@
 		8F24FC8A2107AACB005BD9DF /* NPCMoveToState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24FC892107AACB005BD9DF /* NPCMoveToState.swift */; };
 		8F24FC8C2107AAE3005BD9DF /* NPCDefeatedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24FC8B2107AAE3005BD9DF /* NPCDefeatedState.swift */; };
 		8F24FC8E210A16F9005BD9DF /* NPCState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24FC8D210A16F9005BD9DF /* NPCState.swift */; };
+		8F9AA9E321830E3600B41275 /* escenario1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F9AA9E221830E3600B41275 /* escenario1.png */; };
+		8F9AA9E52184A21400B41275 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AA9E42184A21400B41275 /* Button.swift */; };
+		8F9AA9E72184DF0400B41275 /* buttonTryAgain.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F9AA9E62184DF0400B41275 /* buttonTryAgain.png */; };
+		8F9AA9E92184E65600B41275 /* buttonTryAgainHover.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F9AA9E82184E65600B41275 /* buttonTryAgainHover.png */; };
 		8F9AB2DC20EF7E99000E44DB /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AB2DB20EF7E99000E44DB /* Character.swift */; };
 		8F9AB2DE20EF7EF0000E44DB /* NPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AB2DD20EF7EF0000E44DB /* NPC.swift */; };
 		8FE07813218159B8005884A8 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE07812218159B8005884A8 /* Constants.swift */; };
@@ -50,6 +54,10 @@
 		8F24FC892107AACB005BD9DF /* NPCMoveToState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NPCMoveToState.swift; sourceTree = "<group>"; };
 		8F24FC8B2107AAE3005BD9DF /* NPCDefeatedState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NPCDefeatedState.swift; sourceTree = "<group>"; };
 		8F24FC8D210A16F9005BD9DF /* NPCState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NPCState.swift; sourceTree = "<group>"; };
+		8F9AA9E221830E3600B41275 /* escenario1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = escenario1.png; path = ../../../../Desktop/escenario1.png; sourceTree = "<group>"; };
+		8F9AA9E42184A21400B41275 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		8F9AA9E62184DF0400B41275 /* buttonTryAgain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonTryAgain.png; sourceTree = "<group>"; };
+		8F9AA9E82184E65600B41275 /* buttonTryAgainHover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonTryAgainHover.png; sourceTree = "<group>"; };
 		8F9AB2DB20EF7E99000E44DB /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		8F9AB2DD20EF7EF0000E44DB /* NPC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NPC.swift; sourceTree = "<group>"; };
 		8FE07812218159B8005884A8 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -193,6 +201,7 @@
 				8FECED4220874CAB0094C789 /* LaunchScreen.storyboard */,
 				8FECED4520874CAB0094C789 /* Info.plist */,
 				8FE3F2E620E80B4900D02C09 /* MusicUtils.swift */,
+				8F9AA9E42184A21400B41275 /* Button.swift */,
 			);
 			path = Prototipo1TFG;
 			sourceTree = "<group>";
@@ -201,7 +210,10 @@
 			isa = PBXGroup;
 			children = (
 				8FE3F2E420E7F81900D02C09 /* youWin.png */,
+				8F9AA9E62184DF0400B41275 /* buttonTryAgain.png */,
+				8F9AA9E82184E65600B41275 /* buttonTryAgainHover.png */,
 				8FE3F2DA20E6768A00D02C09 /* youLose.png */,
+				8F9AA9E221830E3600B41275 /* escenario1.png */,
 				8FECED522087549A0094C789 /* back1.png */,
 			);
 			path = images;
@@ -272,10 +284,13 @@
 				8FE3F2E120E7F54400D02C09 /* lose.mp3 in Resources */,
 				8FE3F2D120E653EB00D02C09 /* tension_electrica_relax.mp3 in Resources */,
 				8FECED532087549A0094C789 /* back1.png in Resources */,
+				8F9AA9E72184DF0400B41275 /* buttonTryAgain.png in Resources */,
 				8FE3F2D420E653EB00D02C09 /* hitCat.mp3 in Resources */,
 				8FE3F2E320E7F56D00D02C09 /* win.mp3 in Resources */,
 				8FECED3F20874CAA0094C789 /* Main.storyboard in Resources */,
+				8F9AA9E92184E65600B41275 /* buttonTryAgainHover.png in Resources */,
 				8FECED4120874CAB0094C789 /* Assets.xcassets in Resources */,
+				8F9AA9E321830E3600B41275 /* escenario1.png in Resources */,
 				8FE3F2D820E653EB00D02C09 /* hitBear.mp3 in Resources */,
 				8FE3F2D620E653EB00D02C09 /* cat-fight.mp3 in Resources */,
 				8FECED4420874CAB0094C789 /* LaunchScreen.storyboard in Resources */,
@@ -297,6 +312,7 @@
 				8F9AB2DE20EF7EF0000E44DB /* NPC.swift in Sources */,
 				8F24FC8420FE7BB3005BD9DF /* NPCAttackState.swift in Sources */,
 				8FE3F2DE20E7E74700D02C09 /* GameOverScene.swift in Sources */,
+				8F9AA9E52184A21400B41275 /* Button.swift in Sources */,
 				8F24FC8620FE7BCA005BD9DF /* NPCIdleState.swift in Sources */,
 				8FE07813218159B8005884A8 /* Constants.swift in Sources */,
 				8FECED3A20874CAA0094C789 /* GameScene.swift in Sources */,

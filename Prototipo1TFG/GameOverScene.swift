@@ -9,12 +9,19 @@
 import Foundation
 import SpriteKit
 
-class GameOverScene: SKScene {
+class GameOverScene: SKScene, ButtonDelegate {
+    
+    private var button: Button
     
     let hasWon:Bool
     
     init(size: CGSize, hasWon: Bool) {
         self.hasWon = hasWon
+        
+        
+        let buttonTexture = SKTexture(imageNamed: "buttonTryAgain")
+        let buttonTextureHover = SKTexture(imageNamed: "buttonTryAgainHover")
+        self.button = Button(texture: buttonTexture, textureHover: buttonTextureHover, color: .black, size: CGSize(width: size.width/6, height: size.height/12))
         
         super.init(size: size)
     }
@@ -25,6 +32,27 @@ class GameOverScene: SKScene {
     
     override func didMove(to view: SKView) {
         
+        setBackground()
+        
+        button.name = "button-tryagain"
+        button.position = CGPoint(x: size.width/2, y: size.height/3)
+        button.delegate = self
+        button.zPosition = 4
+        addChild(button)
+    }
+    
+    
+    func buttonClicked(sender: Button) {
+        print("button named \(sender.name!)")
+        if sender.name == "button-tryagain" {
+            let gameScene = GameScene(size: size)
+            gameScene.scaleMode = scaleMode
+            let transition = SKTransition.doorsOpenVertical(withDuration: 1.0)
+            view?.presentScene(gameScene, transition: transition)
+        }
+    }
+    
+    func setBackground() {
         let background: SKSpriteNode
         
         if(hasWon) {
@@ -37,6 +65,7 @@ class GameOverScene: SKScene {
         
         background.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
         background.scale(to: CGSize(width: size.width, height: size.height))
+        background.zPosition = 0
         addChild(background)
     }
 }
