@@ -18,7 +18,8 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let sceneNode = GameScene(size: CGSize(width: 2048, height: 1536))
+        //let sceneNode = GameScene(size: CGSize(width: 2048, height: 1536))
+        let sceneNode = HomeScene(size: CGSize(width: 2048, height: 1536))
         
         // Set the scale mode to scale to fit the window
         sceneNode.scaleMode = .aspectFill

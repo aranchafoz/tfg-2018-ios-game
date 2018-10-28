@@ -43,7 +43,6 @@ class GameOverScene: SKScene, ButtonDelegate {
     
     
     func buttonClicked(sender: Button) {
-        print("button named \(sender.name!)")
         if sender.name == "button-tryagain" {
             let gameScene = GameScene(size: size)
             gameScene.scaleMode = scaleMode
