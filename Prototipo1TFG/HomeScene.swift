@@ -9,15 +9,13 @@
 import Foundation
 import SpriteKit
 
-class HomeScene: SKScene, ButtonDelegate {
+class HomeScene: SKScene {
     
-    var playButton: Button
+    let tapStartLabel: SKSpriteNode
     
     override init(size: CGSize) {
         
-        let buttonTexture = SKTexture(imageNamed: "buttonPlay")
-        let buttonTextureHover = SKTexture(imageNamed: "buttonPlay")
-        self.playButton = Button(texture: buttonTexture, textureHover: buttonTextureHover, color: .black, size: CGSize(width: size.width/6, height: size.height/12))
+        self.tapStartLabel = SKSpriteNode(imageNamed: "tapToStart")
         
         super.init(size: size)
     }
@@ -28,28 +26,48 @@ class HomeScene: SKScene, ButtonDelegate {
     
     override func didMove(to view: SKView) {
         
-        let background = SKSpriteNode(imageNamed: "homeExample")
+        let background = SKSpriteNode(imageNamed: "homeBackground")
         background.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
         background.scale(to: CGSize(width: size.width, height: size.height))
         background.zPosition = 0
         addChild(background)
         
+        let title = SKSpriteNode(imageNamed: "gameTitle")
+        title.position = CGPoint(x: size.width/2, y: size.height - (size.width/4))
+        title.scale(to: CGSize(width: (size.width/5)*2, height: (size.width/5)*2))
+        title.zPosition = 4
+        addChild(title)
         
-        playButton.name = "button-play"
-        playButton.position = CGPoint(x: size.width/2, y: size.height/3)
-        playButton.delegate = self
-        playButton.zPosition = 4
-        addChild(playButton)
+        tapStartLabel.position = CGPoint(x: size.width/2, y: size.height/5)
+        tapStartLabel.zPosition = 4
+        addChild(tapStartLabel)
+        
+        var blinkAlpha = 1.0
+        var alphaAsc = false
+        let blinkAction = SKAction.customAction(withDuration: 10.0) { (node, elapsedTime) in
+            
+            if alphaAsc && blinkAlpha < 1 {
+                blinkAlpha += 0.02
+            } else {
+                alphaAsc = false
+                if blinkAlpha > 0.1 {
+                    blinkAlpha -= 0.02
+                } else {
+                    alphaAsc = true
+                    blinkAlpha += 0.02
+                }
+            }
+            print("\(blinkAlpha)")
+            node.alpha = CGFloat(blinkAlpha)
+        }
+        tapStartLabel.run(SKAction.repeatForever(blinkAction))
     }
     
-    func buttonClicked(sender: Button) {
-        print("button named \(sender.name!)")
-        if sender.name == "button-play" {
-            let gameScene = GameScene(size: size)
-            gameScene.scaleMode = scaleMode
-            let transition = SKTransition.doorsOpenVertical(withDuration: 1.0)
-            view?.presentScene(gameScene, transition: transition)
-        }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let gameScene = GameScene(size: size)
+        gameScene.scaleMode = scaleMode
+        let transition = SKTransition.doorsOpenVertical(withDuration: 1.0)
+        view?.presentScene(gameScene, transition: transition)
     }
     
 }
